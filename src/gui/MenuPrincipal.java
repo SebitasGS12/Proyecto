@@ -104,7 +104,9 @@ public class MenuPrincipal extends JFrame {
 		lblIniciarSesion.setBounds(459, 48, 260, 323);
 		lblIniciarSesion.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent arg0) {
-				System.out.println("Funciona");
+				GestorInventario gr = new GestorInventario();
+				gr.setLocationRelativeTo(contentPane);
+				gr.setVisible(true);
 			}
 		});
 		contentPane.add(lblIniciarSesion);

@@ -48,7 +48,6 @@ public class Inicio extends JFrame {
 	private JLabel lblNewLabel_1;
 	private JLabel lblNewLabel_2;
 	private JLabel lblTitulo;
-	private JButton btnAyuda;
 
 	/**
 	 * Launch the application.
@@ -84,11 +83,6 @@ public class Inicio extends JFrame {
 		lblNewLabel.setIcon(new ImageIcon(Inicio.class.getResource("/img/uno.png")));
 		lblNewLabel.setBounds(44, 202, 418, 383);
 		contentPane.add(lblNewLabel);
-		
-		btnAyuda = new JButton("");
-		btnAyuda.setIcon(new ImageIcon(Inicio.class.getResource("/img/ayuda2.png")));
-		btnAyuda.setBounds(10, 518, 134, 143);
-		contentPane.add(btnAyuda);
 		
 		txtID = new JTextField();
 		txtID.setColumns(10);

@@ -77,7 +77,9 @@ public class MenuPrincipal extends JFrame {
 		lblAyuda.setBounds(84, 301, 150, 155);
 		lblAyuda.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent arg0) {
-				System.out.println("Funciona");
+				Ayuda ay = new Ayuda();
+				ay.setLocationRelativeTo(contentPane);
+				ay.setVisible(true);
 			}
 		
 		});
@@ -104,9 +106,9 @@ public class MenuPrincipal extends JFrame {
 		lblIniciarSesion.setBounds(459, 48, 260, 323);
 		lblIniciarSesion.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent arg0) {
-				GestorInventario gr = new GestorInventario();
-				gr.setLocationRelativeTo(contentPane);
-				gr.setVisible(true);
+				IniciarSesion is = new IniciarSesion();
+				is.setLocationRelativeTo(contentPane);
+				is.setVisible(true);
 			}
 		});
 		contentPane.add(lblIniciarSesion);

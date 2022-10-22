@@ -1,30 +1,25 @@
 package gui;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import java.awt.Toolkit;
-import javax.swing.JInternalFrame;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import java.awt.Color;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.SwingConstants;
 import java.awt.Font;
+import javax.swing.SwingConstants;
+import javax.swing.ImageIcon;
+import javax.swing.JPanel;
+import javax.swing.JButton;
+import java.awt.Toolkit;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
-public class Ayuda extends JFrame {
-
-	private JPanel contentPane;
+public class Ayuda extends JDialog implements ActionListener {
 	private JLabel lblCabecera;
 	private JPanel panel;
 	private JButton btnInfo;
 	private JButton btnManual;
 	private JButton btnAcerca;
-	private JInternalFrame internalFrame;
-	String titulo = "  ";
 
 	/**
 	 * Launch the application.
@@ -33,8 +28,9 @@ public class Ayuda extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Ayuda frame = new Ayuda();
-					frame.setVisible(true);
+					Ayuda dialog = new Ayuda();
+					dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+					dialog.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -43,35 +39,33 @@ public class Ayuda extends JFrame {
 	}
 
 	/**
-	 * Create the frame.
+	 * Create the dialog.
 	 */
 	public Ayuda() {
 		setTitle("Ayuda");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Ayuda.class.getResource("/img/ico.png")));
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setModal(true);
 		setBounds(100, 100, 509, 600);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		getContentPane().setLayout(null);
 		
 		lblCabecera = new JLabel("");
 		lblCabecera.setIcon(new ImageIcon(Ayuda.class.getResource("/img/Cabecera.png")));
-		lblCabecera.setForeground(Color.BLACK);
-		lblCabecera.setBackground(new Color(102, 153, 51));
-		lblCabecera.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblCabecera.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCabecera.setToolTipText("");
+		lblCabecera.setHorizontalAlignment(SwingConstants.CENTER);
+		lblCabecera.setForeground(Color.BLACK);
+		lblCabecera.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblCabecera.setBackground(new Color(102, 153, 51));
 		lblCabecera.setBounds(0, 0, 493, 83);
-		contentPane.add(lblCabecera);
+		getContentPane().add(lblCabecera);
 		
 		panel = new JPanel();
-		panel.setBackground(new Color(217, 217,217));
-		panel.setBounds(0, 82, 162, 479);
-		contentPane.add(panel);
 		panel.setLayout(null);
+		panel.setBackground(new Color(217, 217, 217));
+		panel.setBounds(0, 82, 162, 479);
+		getContentPane().add(panel);
 		
 		btnInfo = new JButton("<html><p>Informacion General <br>del Programa</p></html>");
+		btnInfo.addActionListener(this);
 		btnInfo.setForeground(Color.LIGHT_GRAY);
 		btnInfo.setBackground(new Color(255, 102, 102));
 		btnInfo.setBounds(10, 29, 142, 77);
@@ -88,14 +82,13 @@ public class Ayuda extends JFrame {
 		btnAcerca.setBackground(new Color(255, 102, 102));
 		btnAcerca.setBounds(10, 242, 142, 50);
 		panel.add(btnAcerca);
-		
-		titulo = "Informacion General del Programa";
-		
-		internalFrame = new JInternalFrame(titulo);
-		internalFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		internalFrame.setEnabled(false);
-		internalFrame.setBounds(163, 85, 330, 476);
-		contentPane.add(internalFrame);
-		internalFrame.setVisible(true);
+
+	}
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnInfo) {
+			actionPerformedBtnInfo(e);
+		}
+	}
+	protected void actionPerformedBtnInfo(ActionEvent e) {
 	}
 }

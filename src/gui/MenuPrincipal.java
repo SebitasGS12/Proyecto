@@ -1,36 +1,32 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
-import javax.swing.ImageIcon;
-import java.awt.Font;
-import javax.swing.SwingConstants;
-import java.awt.Color;
-import java.awt.SystemColor;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-
-import javax.swing.UIManager;
 import javax.swing.JButton;
-import java.awt.Cursor;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 import java.awt.Toolkit;
+import javax.swing.SwingConstants;
+import java.awt.Font;
 
-public class MenuPrincipal extends JFrame {
+public class MenuPrincipal extends JFrame implements ActionListener {
 
 	private JPanel contentPane;
-	private JLabel lbltxt;
+	private JButton btnSalir;
 	private JLabel lblFondo;
-	private JLabel lblAyuda;
-	private JLabel lblAyudaTxt;
-	private JPanel panel;
-	private JLabel lblIniciarSesion;
-	private JPanel panel2;
-	private JLabel lblIniciar;
+	private JButton btnVendedores;
+	private JButton btnInventario;
+	private JButton btnVentas;
+	private JLabel lblNewLabel;
+	private JLabel lblgestorDeInventario;
+	private JLabel lblgestorDeVentas;
 
 	/**
 	 * Launch the application.
@@ -52,87 +48,79 @@ public class MenuPrincipal extends JFrame {
 	 * Create the frame.
 	 */
 	public MenuPrincipal() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(MenuPrincipal.class.getResource("/img/ico.png")));
 		setTitle("Menu Principal");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(MenuPrincipal.class.getResource("/img/ico.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 900,540);
+		setBounds(100, 100, 1100, 650);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setBackground(new Color(180,217,231));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		lbltxt = new JLabel("Menu Principal");
-		lbltxt.setForeground(Color.WHITE);
-		lbltxt.setHorizontalAlignment(SwingConstants.CENTER);
-		lbltxt.setToolTipText("");
-		lbltxt.setFont(new Font("Segoe UI Black", Font.PLAIN, 24));
-		lbltxt.setBounds(10, 11, 185, 47);
-		contentPane.add(lbltxt);
+		btnVentas = new JButton("");
+		btnVentas.addActionListener(this);
 		
+		lblgestorDeInventario = new JLabel("<html>Gestor De <br> Inventario</html>");
+		lblgestorDeInventario.setForeground(new Color(0, 191, 255));
+		lblgestorDeInventario.setFont(new Font("Verdana", Font.BOLD, 25));
+		lblgestorDeInventario.setHorizontalAlignment(SwingConstants.CENTER);
+		lblgestorDeInventario.setBounds(464, 384, 166, 61);
+		contentPane.add(lblgestorDeInventario);
 		
+		lblgestorDeVentas = new JLabel("<html>Gestor De <br> Ventas</html>");
+		lblgestorDeVentas.setForeground(new Color(0, 191, 255));
+		lblgestorDeVentas.setFont(new Font("Verdana", Font.BOLD, 25));
+		lblgestorDeVentas.setHorizontalAlignment(SwingConstants.CENTER);
+		lblgestorDeVentas.setBounds(836, 384, 166, 61);
+		contentPane.add(lblgestorDeVentas);
 		
-		lblAyuda = new JLabel("");
-		lblAyuda.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		lblAyuda.setIcon(new ImageIcon(MenuPrincipal.class.getResource("/img/FotoAyuda.png")));
-		lblAyuda.setBounds(84, 301, 150, 155);
-		lblAyuda.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent arg0) {
-				Ayuda ay = new Ayuda();
-				ay.setLocationRelativeTo(contentPane);
-				ay.setVisible(true);
-			}
+		lblNewLabel = new JLabel("<html>Gestor De <br> Vendedores </html>");
+		lblNewLabel.setForeground(new Color(34, 139, 34));
+		lblNewLabel.setFont(new Font("Verdana", Font.BOLD, 25));
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setBounds(117, 277, 166, 64);
+		contentPane.add(lblNewLabel);
+		btnVentas.setIcon(new ImageIcon(MenuPrincipal.class.getResource("/img/btnVentas.png")));
+		btnVentas.setDefaultCapable(false);
+		btnVentas.setContentAreaFilled(false);
+		btnVentas.setBorderPainted(false);
+		btnVentas.setBounds(801, 133, 231, 402);
+		contentPane.add(btnVentas);
 		
-		});
+		btnInventario = new JButton("");
+
+		btnInventario.setIcon(new ImageIcon(MenuPrincipal.class.getResource("/img/btnInventario.png")));
+		btnInventario.setDefaultCapable(false);
+		btnInventario.setContentAreaFilled(false);
+		btnInventario.setBorderPainted(false);
+		btnInventario.setBounds(435, 133, 231, 402);
+		contentPane.add(btnInventario);
 		
-		contentPane.add(lblAyuda);
+		btnVendedores = new JButton("");
+		btnVendedores.setBorderPainted(false);
+		btnVendedores.setDefaultCapable(false);
+		btnVendedores.setContentAreaFilled(false);
+		btnVendedores.setIcon(new ImageIcon(MenuPrincipal.class.getResource("/img/btnVendedores.png")));
+		btnVendedores.setBounds(87, 34, 231, 402);
+		contentPane.add(btnVendedores);
 		
+		btnSalir = new JButton("");
+		btnSalir.setIcon(new ImageIcon(MenuPrincipal.class.getResource("/img/btnSalir (1).png")));
+		btnSalir.setBounds(26, 450, 144, 150);
+		contentPane.add(btnSalir);
 		
-		panel = new JPanel();
-		panel.setBackground(new Color(152, 251, 152));
-		panel.setBounds(99, 273, 119, 47);
-		contentPane.add(panel);
-		panel.setLayout(null);
-		
-		lblAyudaTxt = new JLabel("AYUDA");
-		lblAyudaTxt.setBounds(25, 11, 71, 22);
-		panel.add(lblAyudaTxt);
-		lblAyudaTxt.setForeground(new Color(255, 69, 0));
-		lblAyudaTxt.setHorizontalAlignment(SwingConstants.CENTER);
-		lblAyudaTxt.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		
-		lblIniciarSesion = new JLabel("");
-		lblIniciarSesion.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		lblIniciarSesion.setIcon(new ImageIcon(MenuPrincipal.class.getResource("/img/FotoInciarSesion.png")));
-		lblIniciarSesion.setBounds(459, 48, 260, 323);
-		lblIniciarSesion.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent arg0) {
-				IniciarSesion is = new IniciarSesion();
-				is.setLocationRelativeTo(contentPane);
-				is.setVisible(true);
-			}
-		});
-		contentPane.add(lblIniciarSesion);
-		
-		panel2 = new JPanel();
-		panel2.setLayout(null);
-		panel2.setBackground(new Color(152, 251, 152));
-		panel2.setBounds(496, 345, 176, 47);
-		contentPane.add(panel2);
-		
-		lblIniciar = new JLabel("Iniciar Sesi\u00F3n");
-		lblIniciar.setHorizontalAlignment(SwingConstants.CENTER);
-		lblIniciar.setForeground(new Color(255, 69, 0));
-		lblIniciar.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblIniciar.setBounds(25, 11, 126, 22);
-		panel2.add(lblIniciar);
-		
-		lblFondo = new JLabel("");
-		lblFondo.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-		lblFondo.setIcon(new ImageIcon(MenuPrincipal.class.getResource("/img/Fondo.jpg")));
-		lblFondo.setBounds(0, 0, 884, 501);
-		
+		lblFondo = new JLabel("New label");
+		lblFondo.setIcon(new ImageIcon(MenuPrincipal.class.getResource("/img/fondoMP.png")));
+		lblFondo.setBounds(0, 172, 1280, 439);
 		contentPane.add(lblFondo);
-		
 	}
 
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnVentas) {
+			actionPerformedBtnVentas(e);
+		}
+	}
+	protected void actionPerformedBtnVentas(ActionEvent e) {
+	}
 }

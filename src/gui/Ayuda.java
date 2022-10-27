@@ -72,12 +72,14 @@ public class Ayuda extends JDialog implements ActionListener {
 		panel.add(btnInfo);
 		
 		btnManual = new JButton("<html><p>Manual de<br> Programa</p></html>");
+		btnManual.addActionListener(this);
 		btnManual.setForeground(Color.LIGHT_GRAY);
 		btnManual.setBackground(new Color(255, 102, 102));
 		btnManual.setBounds(10, 134, 142, 70);
 		panel.add(btnManual);
 		
 		btnAcerca = new JButton("Acerca De");
+		btnAcerca.addActionListener(this);
 		btnAcerca.setForeground(Color.LIGHT_GRAY);
 		btnAcerca.setBackground(new Color(255, 102, 102));
 		btnAcerca.setBounds(10, 242, 142, 50);
@@ -85,10 +87,22 @@ public class Ayuda extends JDialog implements ActionListener {
 
 	}
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnAcerca) {
+			actionPerformedBtnAcerca(e);
+		}
+		if (e.getSource() == btnManual) {
+			actionPerformedBtnManual(e);
+		}
 		if (e.getSource() == btnInfo) {
 			actionPerformedBtnInfo(e);
 		}
 	}
 	protected void actionPerformedBtnInfo(ActionEvent e) {
+		
+		
+	}
+	protected void actionPerformedBtnManual(ActionEvent e) {
+	}
+	protected void actionPerformedBtnAcerca(ActionEvent e) {
 	}
 }

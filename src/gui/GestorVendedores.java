@@ -4,6 +4,9 @@ import java.awt.EventQueue;
 
 import javax.swing.JDialog;
 import java.awt.Toolkit;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 import javax.swing.JButton;
 import java.awt.Font;
 import javax.swing.JLabel;
@@ -24,6 +27,7 @@ public class GestorVendedores extends JDialog {
 	private JLabel lblGestorDeVendedores;
 	private JScrollPane scrollPane;
 	private JTable tabla;
+	private JLabel lblSalir;
 
 	/**
 	 * Launch the application.
@@ -54,28 +58,41 @@ public class GestorVendedores extends JDialog {
 		
 		getContentPane().setLayout(null);
 		
+		lblSalir = new JLabel("");
+		lblSalir.setIcon(new ImageIcon(GestorVendedores.class.getResource("/img/regresar_Menu.png")));
+		lblSalir.setBounds(10, 11, 64, 64);
+		lblSalir.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent arg0) {
+				dispose();
+				MenuPrincipal mp = new MenuPrincipal();
+				mp.setLocationRelativeTo(null);
+				mp.setVisible(true);
+			}
+		});
+		getContentPane().add(lblSalir);
+		
 		btnEditar = new JButton("EDITAR");
 		btnEditar.setIcon(new ImageIcon(GestorVendedores.class.getResource("/img/computadora.png")));
 		btnEditar.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 13));
-		btnEditar.setBounds(187, 443, 167, 79);
+		btnEditar.setBounds(187, 471, 167, 79);
 		getContentPane().add(btnEditar);
 		
 		btnVisualizar = new JButton("VISUALIZAR");
 		btnVisualizar.setIcon(new ImageIcon(GestorVendedores.class.getResource("/img/visionario.png")));
 		btnVisualizar.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 13));
-		btnVisualizar.setBounds(364, 443, 182, 79);
+		btnVisualizar.setBounds(364, 471, 182, 79);
 		getContentPane().add(btnVisualizar);
 		
 		btnEliminar = new JButton("ELIMINAR");
 		btnEliminar.setIcon(new ImageIcon(GestorVendedores.class.getResource("/img/basura.png")));
 		btnEliminar.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 13));
-		btnEliminar.setBounds(550, 443, 167, 79);
+		btnEliminar.setBounds(550, 471, 167, 79);
 		getContentPane().add(btnEliminar);
 		
 		btnAgregar = new JButton("AGREGAR");
 		btnAgregar.setIcon(new ImageIcon(GestorVendedores.class.getResource("/img/agente.png")));
 		btnAgregar.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 13));
-		btnAgregar.setBounds(10, 443, 167, 79);
+		btnAgregar.setBounds(10, 471, 167, 79);
 		getContentPane().add(btnAgregar);
 		
 		i1 = new JLabel("");
@@ -96,16 +113,19 @@ public class GestorVendedores extends JDialog {
 		lblGestorDeVendedores = new JLabel("GESTOR DE VENDEDORES");
 		lblGestorDeVendedores.setForeground(Color.WHITE);
 		lblGestorDeVendedores.setFont(new Font("Gill Sans Ultra Bold Condensed", Font.ITALIC, 23));
-		lblGestorDeVendedores.setBounds(231, 11, 290, 41);
+		lblGestorDeVendedores.setBounds(243, 22, 290, 41);
 		getContentPane().add(lblGestorDeVendedores);
 		
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 64, 707, 358);
+		scrollPane.setBounds(10, 90, 707, 370);
 		getContentPane().add(scrollPane);
 		
 		tabla = new JTable();
 		tabla.setFillsViewportHeight(true);
 		scrollPane.setViewportView(tabla);
 
+		
+		
+		
 	}
 }

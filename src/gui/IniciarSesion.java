@@ -133,5 +133,11 @@ public class IniciarSesion extends JDialog implements ActionListener {
 		}
 	}
 	protected void actionPerformedBtnIniciarSesion(ActionEvent e) {
+		
+		dispose();
+		MenuPrincipal mp = new MenuPrincipal();
+		mp.setLocationRelativeTo(null);
+		mp.setVisible(true);
+		
 	}
 }

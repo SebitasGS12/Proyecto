@@ -89,6 +89,7 @@ public class MenuPrincipal extends JFrame implements ActionListener {
 		contentPane.add(btnVentas);
 		
 		btnInventario = new JButton("");
+		btnInventario.addActionListener(this);
 
 		btnInventario.setIcon(new ImageIcon(MenuPrincipal.class.getResource("/img/btnInventario.png")));
 		btnInventario.setDefaultCapable(false);
@@ -98,6 +99,7 @@ public class MenuPrincipal extends JFrame implements ActionListener {
 		contentPane.add(btnInventario);
 		
 		btnVendedores = new JButton("");
+		btnVendedores.addActionListener(this);
 		btnVendedores.setBorderPainted(false);
 		btnVendedores.setDefaultCapable(false);
 		btnVendedores.setContentAreaFilled(false);
@@ -106,6 +108,7 @@ public class MenuPrincipal extends JFrame implements ActionListener {
 		contentPane.add(btnVendedores);
 		
 		btnSalir = new JButton("");
+		btnSalir.addActionListener(this);
 		btnSalir.setIcon(new ImageIcon(MenuPrincipal.class.getResource("/img/btnSalir (1).png")));
 		btnSalir.setBounds(26, 450, 144, 150);
 		contentPane.add(btnSalir);
@@ -117,10 +120,43 @@ public class MenuPrincipal extends JFrame implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnInventario) {
+			actionPerformedBtnInventario(e);
+		}
+		if (e.getSource() == btnSalir) {
+			actionPerformedBtnSalir(e);
+		}
+		if (e.getSource() == btnVendedores) {
+			actionPerformedBtnVendedores(e);
+		}
 		if (e.getSource() == btnVentas) {
 			actionPerformedBtnVentas(e);
 		}
 	}
 	protected void actionPerformedBtnVentas(ActionEvent e) {
+		
+		dispose();
+		GestorVentas gv = new GestorVentas();
+		gv.setLocationRelativeTo(contentPane);
+		gv.setVisible(true);
+		
+	}
+	protected void actionPerformedBtnVendedores(ActionEvent e) {
+		dispose();
+		GestorVendedores gv = new GestorVendedores();
+		gv.setLocationRelativeTo(contentPane);
+		gv.setVisible(true);
+	}
+	protected void actionPerformedBtnSalir(ActionEvent e) {
+		dispose();
+		IniciarSesion is = new IniciarSesion();
+		is.setLocationRelativeTo(contentPane);
+		is.setVisible(true);
+	}
+	protected void actionPerformedBtnInventario(ActionEvent e) {
+		dispose();
+		GestorInventario gi = new GestorInventario();
+		gi.setLocationRelativeTo(contentPane);
+		gi.setVisible(true);
 	}
 }

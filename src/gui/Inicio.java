@@ -77,6 +77,7 @@ public class Inicio extends JFrame {
 		lblAyuda.setBounds(84, 301, 150, 155);
 		lblAyuda.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent arg0) {
+				
 				Ayuda ay = new Ayuda();
 				ay.setLocationRelativeTo(contentPane);
 				ay.setVisible(true);
@@ -106,6 +107,7 @@ public class Inicio extends JFrame {
 		lblIniciarSesion.setBounds(459, 48, 260, 323);
 		lblIniciarSesion.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent arg0) {
+				dispose();
 				IniciarSesion is = new IniciarSesion();
 				is.setLocationRelativeTo(contentPane);
 				is.setVisible(true);

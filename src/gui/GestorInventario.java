@@ -22,6 +22,7 @@ import javax.swing.JTable;
 import java.awt.SystemColor;
 import javax.swing.JLabel;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
@@ -99,6 +100,18 @@ public class GestorInventario extends JDialog implements MouseListener {
 		lblMenuPrincipal.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMenuPrincipal.setIcon(new ImageIcon(GestorInventario.class.getResource("/img/imgMenuPrincipal.png")));
 		lblMenuPrincipal.setBounds(20, 24, 147, 111);
+		
+		lblMenuPrincipal.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent arg0) {
+				
+				dispose();
+				MenuPrincipal mp = new MenuPrincipal();
+				mp.setLocationRelativeTo(null);
+				mp.setVisible(true);
+			}
+		
+		});
+		
 		panel.add(lblMenuPrincipal);
 		
 		tbDatos = new JTable();

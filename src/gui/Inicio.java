@@ -53,7 +53,7 @@ public class Inicio extends JFrame {
 	 */
 	public Inicio() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Inicio.class.getResource("/img/ico.png")));
-		setTitle("Menu Principal");
+		setTitle("Inicio");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 900,540);
 		contentPane = new JPanel();

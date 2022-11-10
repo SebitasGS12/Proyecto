@@ -20,6 +20,7 @@ public class Ayuda extends JDialog implements ActionListener {
 	private JButton btnInfo;
 	private JButton btnManual;
 	private JButton btnAcerca;
+	private JLabel lblAcerca;
 
 	/**
 	 * Launch the application.
@@ -61,7 +62,7 @@ public class Ayuda extends JDialog implements ActionListener {
 		panel = new JPanel();
 		panel.setLayout(null);
 		panel.setBackground(new Color(217, 217, 217));
-		panel.setBounds(0, 82, 162, 479);
+		panel.setBounds(0, 82, 160, 479);
 		getContentPane().add(panel);
 		
 		btnInfo = new JButton("<html><p>Informacion General <br>del Programa</p></html>");
@@ -84,6 +85,13 @@ public class Ayuda extends JDialog implements ActionListener {
 		btnAcerca.setBackground(new Color(255, 102, 102));
 		btnAcerca.setBounds(10, 242, 142, 50);
 		panel.add(btnAcerca);
+		
+		lblAcerca = new JLabel("");
+		lblAcerca.setHorizontalAlignment(SwingConstants.CENTER);
+		lblAcerca.setIcon(new ImageIcon(Ayuda.class.getResource("/img/ayuda_contacto.png")));
+		lblAcerca.setBounds(170, 94, 311, 456);
+		getContentPane().add(lblAcerca);
+		
 
 	}
 	public void actionPerformed(ActionEvent e) {
@@ -102,7 +110,15 @@ public class Ayuda extends JDialog implements ActionListener {
 		
 	}
 	protected void actionPerformedBtnManual(ActionEvent e) {
+		
+		
+		
 	}
 	protected void actionPerformedBtnAcerca(ActionEvent e) {
+		
+		
+		
+	
+	
 	}
 }

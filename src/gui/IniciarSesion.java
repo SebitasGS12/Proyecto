@@ -9,8 +9,14 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import CapaNegocio.NgcPersona;
+import Clases.Persona;
+
 import java.awt.Toolkit;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.SystemColor;
 import javax.swing.ImageIcon;
@@ -29,8 +35,8 @@ public class IniciarSesion extends JDialog implements ActionListener {
 	private JLabel lblDerecha;
 	private JLabel lblTitulo;
 	private JLabel lblFondo;
-	private JTextField textField;
-	private JPasswordField passwordField;
+	private JTextField txtDNI;
+	private JTextField txtPass;
 	private JButton btnIniciarSesion;
 	private JButton btnOlvidarContraseña;
 	private JButton btnCrearNuevaCuenta;
@@ -77,16 +83,19 @@ public class IniciarSesion extends JDialog implements ActionListener {
 		btnIniciarSesion.setBorderPainted(rootPaneCheckingEnabled);
 		getContentPane().add(btnIniciarSesion);
 		
-		passwordField = new JPasswordField();
-		passwordField.setBackground(SystemColor.inactiveCaptionBorder);
-		passwordField.setBounds(729, 148, 260, 31);
-		getContentPane().add(passwordField);
+		txtPass = new JTextField();
+		txtPass.setText("urtiaga92920");
+		txtPass.setBackground(SystemColor.inactiveCaptionBorder);
+		txtPass.setBounds(729, 148, 260, 31);
+		getContentPane().add(txtPass);
 		
-		textField = new JTextField();
-		textField.setColumns(10);
-		textField.setBackground(SystemColor.inactiveCaptionBorder);
-		textField.setBounds(729, 70, 260, 31);
-		getContentPane().add(textField);
+		txtDNI = new JTextField();
+		txtDNI.setText("98342465");
+		txtDNI.setHorizontalAlignment(SwingConstants.CENTER);
+		txtDNI.setColumns(10);
+		txtDNI.setBackground(SystemColor.inactiveCaptionBorder);
+		txtDNI.setBounds(729, 70, 260, 31);
+		getContentPane().add(txtDNI);
 		
 		lblNewLabel = new JLabel("");
 		lblNewLabel.setIcon(new ImageIcon(IniciarSesion.class.getResource("/img/uno.png")));
@@ -134,10 +143,28 @@ public class IniciarSesion extends JDialog implements ActionListener {
 	}
 	protected void actionPerformedBtnIniciarSesion(ActionEvent e) {
 		
-		dispose();
-		MenuPrincipal mp = new MenuPrincipal();
-		mp.setLocationRelativeTo(null);
-		mp.setVisible(true);
+		
+		NgcPersona gPer = new NgcPersona();
+		String codigo = txtDNI.getText(); 
+		String contraseña = txtPass.getText().toString().trim();
+		if (codigo.matches("\\d{8}")) {
+			try {
+				Persona p = gPer.BuscarDNI(Integer.parseInt(codigo));
+
+				if (p.getContraseña().equals(contraseña)) {
+					dispose();
+					MenuPrincipal mp = new MenuPrincipal(p.getDni_Persona());
+					mp.setLocationRelativeTo(getContentPane());
+					mp.setVisible(true);			
+				}			
+			} catch (Exception e2) {
+				JOptionPane.showMessageDialog(null, "DNI no existe");
+			}	
+		}else {
+			JOptionPane.showMessageDialog(null, "Ingrese un DNI valido");
+		}
+
+		
 		
 	}
 }

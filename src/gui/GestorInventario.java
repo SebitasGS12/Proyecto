@@ -42,13 +42,15 @@ public class GestorInventario extends JDialog implements MouseListener {
 	private JButton btnEditarProducto;
 	private JButton btnGuardarDatos;
 	private JButton btnExportarDatos;
-
+	private static int Dni ; 
+	
+	
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		try {
-			GestorInventario dialog = new GestorInventario();
+			GestorInventario dialog = new GestorInventario(Dni);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -59,7 +61,7 @@ public class GestorInventario extends JDialog implements MouseListener {
 	/**
 	 * Create the dialog.
 	 */
-	public GestorInventario() {
+	public GestorInventario(int dni) {
 		setModal(true);
 		setForeground(SystemColor.inactiveCaption);
 		setBackground(SystemColor.desktop);
@@ -105,7 +107,7 @@ public class GestorInventario extends JDialog implements MouseListener {
 			public void mouseClicked(MouseEvent arg0) {
 				
 				dispose();
-				MenuPrincipal mp = new MenuPrincipal();
+				MenuPrincipal mp = new MenuPrincipal(dni);
 				mp.setLocationRelativeTo(null);
 				mp.setVisible(true);
 			}

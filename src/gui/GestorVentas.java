@@ -36,6 +36,8 @@ public class GestorVentas extends JDialog  {
 	private JLabel lblSalir;
 	private JScrollPane scrollPane;
 	private JTable table;
+	private static int Dni; 
+
 	
 	
 	private final JPanel contentPanel = new JPanel();
@@ -45,7 +47,7 @@ public class GestorVentas extends JDialog  {
 	 */
 	public static void main(String[] args) {
 		try {
-			GestorVentas dialog = new GestorVentas();
+			GestorVentas dialog = new GestorVentas(Dni);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -56,7 +58,8 @@ public class GestorVentas extends JDialog  {
 	/**
 	 * Create the dialog.
 	 */
-	public GestorVentas() {
+	public GestorVentas(int code) {
+		Dni = code;
 		setModal(true);
 		setModalExclusionType(ModalExclusionType.APPLICATION_EXCLUDE);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -124,7 +127,7 @@ public class GestorVentas extends JDialog  {
 		lblSalir.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent arg0) {
 				dispose();
-				MenuPrincipal mp = new MenuPrincipal();
+				MenuPrincipal mp = new MenuPrincipal(code);
 				mp.setLocationRelativeTo(contentPane);
 				mp.setVisible(true);
 			}

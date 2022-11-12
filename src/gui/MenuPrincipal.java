@@ -7,9 +7,18 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import CapaNegocio.NgcAdmin;
+import CapaNegocio.NgcEmpleado;
+import CapaNegocio.NgcPersona;
+import Clases.Admin;
+import Clases.Persona;
+
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Toolkit;
@@ -27,6 +36,10 @@ public class MenuPrincipal extends JFrame implements ActionListener {
 	private JLabel lblNewLabel;
 	private JLabel lblgestorDeInventario;
 	private JLabel lblgestorDeVentas;
+	private static int Dni; 
+	private JLabel lblBienvenida;
+	
+	
 
 	/**
 	 * Launch the application.
@@ -35,8 +48,10 @@ public class MenuPrincipal extends JFrame implements ActionListener {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MenuPrincipal frame = new MenuPrincipal();
+					MenuPrincipal frame = new MenuPrincipal(Dni);
 					frame.setVisible(true);
+					
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -47,7 +62,13 @@ public class MenuPrincipal extends JFrame implements ActionListener {
 	/**
 	 * Create the frame.
 	 */
-	public MenuPrincipal() {
+	NgcPersona gPer = new NgcPersona();
+	NgcAdmin gAdm = new NgcAdmin();
+	
+	
+	
+	public MenuPrincipal(int Code) {
+		this.Dni = Code;
 		setTitle("Menu Principal");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(MenuPrincipal.class.getResource("/img/ico.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -117,9 +138,27 @@ public class MenuPrincipal extends JFrame implements ActionListener {
 		lblFondo.setIcon(new ImageIcon(MenuPrincipal.class.getResource("/img/fondoMP.png")));
 		lblFondo.setBounds(0, 172, 1280, 439);
 		contentPane.add(lblFondo);
+		
+		lblBienvenida = new JLabel("");
+		lblBienvenida.setForeground(new Color(46, 139, 87));
+		lblBienvenida.setFont(new Font("HP Simplified", Font.ITALIC, 30));
+		lblBienvenida.setBackground(new Color(240, 240, 240));
+		lblBienvenida.setBounds(350, 29, 706, 56);
+		
+		
+		cargarTitulo(Code);
+		System.out.println(Dni);
+		
+		
 	}
 
+	
+	
+	
+	
+	
 	public void actionPerformed(ActionEvent e) {
+		
 		if (e.getSource() == btnInventario) {
 			actionPerformedBtnInventario(e);
 		}
@@ -136,16 +175,26 @@ public class MenuPrincipal extends JFrame implements ActionListener {
 	protected void actionPerformedBtnVentas(ActionEvent e) {
 		
 		dispose();
-		GestorVentas gv = new GestorVentas();
+		GestorVentas gv = new GestorVentas(this.Dni);
 		gv.setLocationRelativeTo(contentPane);
 		gv.setVisible(true);
 		
 	}
 	protected void actionPerformedBtnVendedores(ActionEvent e) {
-		dispose();
-		GestorVendedores gv = new GestorVendedores();
-		gv.setLocationRelativeTo(contentPane);
-		gv.setVisible(true);
+		
+		Admin a = gAdm.BuscarDNI(Dni);
+		if(a != null) {
+			dispose();
+			GestorVendedores gv = new GestorVendedores(this.Dni);
+			gv.setLocationRelativeTo(contentPane);
+			gv.setVisible(true);
+		}else {
+			JOptionPane.showMessageDialog(null, "Usted no Posee los Permisos para Entrar");
+		}
+		
+		
+		
+		
 	}
 	protected void actionPerformedBtnSalir(ActionEvent e) {
 		dispose();
@@ -155,8 +204,34 @@ public class MenuPrincipal extends JFrame implements ActionListener {
 	}
 	protected void actionPerformedBtnInventario(ActionEvent e) {
 		dispose();
-		GestorInventario gi = new GestorInventario();
+		GestorInventario gi = new GestorInventario(this.Dni);
 		gi.setLocationRelativeTo(contentPane);
 		gi.setVisible(true);
 	}
+	
+	
+	private String tipo(Persona x) {
+		String val = "" ; 
+		NgcAdmin nAdmin = new NgcAdmin();
+		Admin a = nAdmin.BuscarDNI(x.getDni_Persona());
+		
+		if ( a != null) {
+			val = " Administrador ";
+		}else if(a == null) {
+			val = " Empleado ";
+		}
+		
+		return val;
+		
+	}
+	
+	private void cargarTitulo(int code) {
+		
+		Persona objP = gPer.BuscarDNI(code);
+
+		lblBienvenida.setText("Hola  "+ tipo(objP) + objP.getNombrePersona() + " " + objP.getApellidosPersona() );
+		contentPane.add(lblBienvenida);
+		
+	}
+	
 }

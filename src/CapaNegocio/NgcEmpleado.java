@@ -5,12 +5,12 @@ import java.util.ArrayList;
 import Clases.Empleado;
 import Datos.clsConexionVendedores;
 
-public class NegocioEmpleado {
+public class NgcEmpleado {
 
 	private clsConexionVendedores ObjEmp;
 	
 	
-	public NegocioEmpleado() {
+	public NgcEmpleado() {
 		ObjEmp = new clsConexionVendedores();
 	}
 	

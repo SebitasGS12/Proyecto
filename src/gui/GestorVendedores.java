@@ -20,7 +20,7 @@ import java.awt.SystemColor;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import CapaNegocio.NegocioEmpleado;
+import CapaNegocio.NgcEmpleado;
 import Clases.Empleado;
 
 
@@ -31,7 +31,7 @@ import javax.swing.JDesktopPane;
 
 public class GestorVendedores extends JDialog implements ActionListener {
 	
-	private NegocioEmpleado ObjNEmp;
+	private NgcEmpleado ObjNEmp;
 	private Empleado ObjEmpSelect;
 	private ArrayList<Empleado> Lista;
 	private JButton btnEditar;
@@ -45,7 +45,7 @@ public class GestorVendedores extends JDialog implements ActionListener {
 	private JScrollPane scrollPane;
 	private JTable tabla;
 	private JLabel lblSalir;
-
+	private static int Dni; 
 	/**
 	 * Launch the application.
 	 */
@@ -53,7 +53,7 @@ public class GestorVendedores extends JDialog implements ActionListener {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					GestorVendedores dialog = new GestorVendedores();
+					GestorVendedores dialog = new GestorVendedores(Dni);
 					dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 					dialog.setVisible(true);
 				} catch (Exception e) {
@@ -68,7 +68,8 @@ public class GestorVendedores extends JDialog implements ActionListener {
 	*/
 	
 	
-	public GestorVendedores() {
+	public GestorVendedores(int code) {
+		Dni = code;
 		getContentPane().setBackground(new Color(65,105,225));
 		setTitle("Gestor de Vendedores");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(GestorVendedores.class.getResource("/img/cajero.png")));
@@ -83,7 +84,7 @@ public class GestorVendedores extends JDialog implements ActionListener {
 		lblSalir.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent arg0) {
 				dispose();
-				MenuPrincipal mp = new MenuPrincipal();
+				MenuPrincipal mp = new MenuPrincipal(code);
 				mp.setLocationRelativeTo(null);
 				mp.setVisible(true);
 			}
@@ -150,7 +151,7 @@ public class GestorVendedores extends JDialog implements ActionListener {
 	}
 	public void CargarTabla() {
 		String Columnas[] = {"DNI_Emp", "ID_Emp", "Puesto", "Nombre", "Apellido"};
-		ObjNEmp = new NegocioEmpleado();
+		ObjNEmp = new NgcEmpleado();
 		Lista = ObjNEmp.Lista();
 		String Filas[][] = new String[Lista.size()][5];
 		for (int i = 0; i < Lista.size(); i++) {
@@ -173,7 +174,7 @@ public class GestorVendedores extends JDialog implements ActionListener {
 		
 		String code = "";
 		String textoguia = "Ingrese DNI o ID del Empleado";
-		NegocioEmpleado nEmp = new NegocioEmpleado();
+		NgcEmpleado nEmp = new NgcEmpleado();
 		try {
 			code = JOptionPane.showInputDialog(this, textoguia,"Vizualisar",-1).toString();
 			
@@ -200,7 +201,7 @@ public class GestorVendedores extends JDialog implements ActionListener {
 	
 	public void CargarTabla2(Empleado Emp) {
 		String Columnas[] = {"DNI_Emp", "ID_Emp", "Puesto", "Nombre", "Apellido"};
-		ObjNEmp = new NegocioEmpleado();
+		ObjNEmp = new NgcEmpleado();
 		Lista = ObjNEmp.Lista();
 		String Filas[][] = new String[1][5];
 		

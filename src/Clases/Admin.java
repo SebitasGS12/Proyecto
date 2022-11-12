@@ -1,16 +1,14 @@
 package Clases;
 
-public class Admin {
+public class Admin extends Persona {
 
 	private String ID_Admin ;
-	private int dni;
 
 	//Constructor
 	
-	public Admin(String iD_Admin, int dni) {
+	public Admin(int dni_Persona,String iD_Admin) {
+		super(dni_Persona);
 		ID_Admin = iD_Admin;
-		this.dni = dni;
-		
 	}
 
 	//Getters y Setters
@@ -19,19 +17,8 @@ public class Admin {
 		return ID_Admin;
 	}
 
-	public int getDni() {
-		return dni;
-	}
-
 	public void setID_Admin(String iD_Admin) {
 		ID_Admin = iD_Admin;
 	}
-
-	public void setDni(int dni) {
-		this.dni = dni;
-	}
-	
-	
-	
-	
+		
 }

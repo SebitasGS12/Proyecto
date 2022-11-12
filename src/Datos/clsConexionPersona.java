@@ -1,0 +1,64 @@
+package Datos;
+
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+
+
+import Clases.Persona;
+
+public class clsConexionPersona {
+
+	// Campos o Atributos
+		private String Driver = "com.mysql.jdbc.Driver";
+		private String URL = "jdbc:mysql://localhost:3306/bd_gci";
+		private String Usuario = "root";
+		private String Clave = "mysql";
+		private static Connection cn; // Conexión Java - MySQL
+		private Statement cmd; // Comando SQL
+		private ResultSet rs; // Contenedor de filas
+		private CallableStatement pa; // Uso de Store Procedure
+		private ArrayList<Persona> Lista;
+	
+		//Metodo Constructor
+		public clsConexionPersona() {
+			try {
+				Class.forName(Driver);
+				cn = DriverManager.getConnection(URL, Usuario, Clave);
+			}
+			catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+			
+		}
+		
+		//Metodo Buscar DNI
+		
+		public Persona BuscarPersona(int dni) {
+			Persona ObjP = null;
+			
+			try {
+				pa = cn.prepareCall("call BuscarPersonaDNI(?)");
+				pa.setInt(1, dni);
+				rs = pa.executeQuery();
+				if (rs.next()) {
+					ObjP = new Persona(
+							rs.getInt("Dni_Persona"),
+							rs.getString("nombrePersona"),
+							rs.getString("apellidosPersona"),
+							rs.getString("correo"),
+							rs.getInt("edad"),
+							rs.getString("contraseña")
+							);
+					}
+				}
+			catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+			return ObjP;
+			
+		}
+}

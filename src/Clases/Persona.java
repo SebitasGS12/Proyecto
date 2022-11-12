@@ -28,6 +28,10 @@ public class Persona {
 		this.apellidosPersona = apellidosPersona;
 	}
 
+	
+	public Persona(int dni_Persona) {
+		this.Dni_Persona = dni_Persona;
+	}
 
 	
 

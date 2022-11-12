@@ -147,7 +147,6 @@ public class MenuPrincipal extends JFrame implements ActionListener {
 		
 		
 		cargarTitulo(Code);
-		System.out.println(Dni);
 		
 		
 	}
@@ -197,16 +196,27 @@ public class MenuPrincipal extends JFrame implements ActionListener {
 		
 	}
 	protected void actionPerformedBtnSalir(ActionEvent e) {
-		dispose();
-		IniciarSesion is = new IniciarSesion();
-		is.setLocationRelativeTo(contentPane);
-		is.setVisible(true);
+		int flag = JOptionPane.showConfirmDialog( null, "¿Desea Cerrar Sesion?", "Alerta", 0);
+		
+		if(flag == 0) {
+			dispose();
+			IniciarSesion is = new IniciarSesion();
+			is.setLocationRelativeTo(contentPane);
+			is.setVisible(true);
+		};
+		
 	}
 	protected void actionPerformedBtnInventario(ActionEvent e) {
+		
+		
+
 		dispose();
 		GestorInventario gi = new GestorInventario(this.Dni);
 		gi.setLocationRelativeTo(contentPane);
 		gi.setVisible(true);
+
+		
+		
 	}
 	
 	

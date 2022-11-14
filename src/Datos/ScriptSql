@@ -214,4 +214,57 @@ delimiter ;
 
 -- call EliminarVendedores();
 
- 
+
+
+
+/**Procedimientos Persona**/
+
+-- Procedimeientos Persona -- BuscarPersonaDNI
+drop procedure if exists BuscarPersonaDNI;
+
+delimiter @@
+create procedure BuscarPersonaDNI(dniPersona int(11))
+begin
+	
+	select * from persona where Dni_persona = dniPersona;
+
+end @@
+delimiter ;
+
+-- call BuscarPersonaDNI("98342465");
+
+ -- Procedimeientos Persona -- InsertarPersona
+
+drop procedure if exists InsertarPersona;
+
+delimiter @@
+create procedure InsertarPersona( xdnipersona int(11),xnopersona varchar(40) ,xappersona varchar(40),xcorreo varchar(30), xedad int,xcontraseña varchar(40))
+begin
+	
+	insert persona values (xdnipersona,xnopersona,xappersona,xcorreo,xedad,xcontraseña);
+
+end @@
+delimiter ;
+
+-- call InsertarPersona();
+
+
+select * from persona;
+
+/**Procedimientos Admin**/
+-- Procedimeientos Admin -- BuscarAdminDNI
+drop procedure if exists BuscarAdminDNI;
+
+delimiter @@
+create procedure BuscarAdminDNI(dniadmin int(11))
+begin
+	
+	select * from admin where dni_admin = dniadmin;
+
+end @@
+delimiter ;
+
+-- call BuscarAdminDNI("98342465");
+
+
+

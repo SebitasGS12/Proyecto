@@ -28,12 +28,6 @@ public class FrmCrearNuevaCuenta extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public FrmCrearNuevaCuenta() {
-		setBounds(100, 100, 518, 539);
-		getContentPane().setLayout(new BorderLayout());
-		contentPanel.setLayout(new FlowLayout());
-		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		getContentPane().add(contentPanel, BorderLayout.CENTER);
-	}
+
 
 }

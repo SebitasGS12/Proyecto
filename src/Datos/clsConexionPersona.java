@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-
+import Clases.Empleado;
 import Clases.Persona;
 
 public class clsConexionPersona {
@@ -105,10 +105,36 @@ public class clsConexionPersona {
 				System.out.println(e.getMessage());
 			}
 		}
-
+		// Método ModificarPersona
+		public void ModificarPersona(Persona ObjP) {
+			
+			try {
+				pa = cn.prepareCall("call ModificarPersona(?,?,?,?,?,?)");
+				
+				pa.setInt(1, ObjP.getDni_Persona());
+				pa.setString(2, ObjP.getNombrePersona());
+				pa.setString(3, ObjP.getApellidosPersona());
+				pa.setString(4, ObjP.getCorreo());
+				pa.setInt(5, ObjP.getEdad());
+				pa.setString(6, ObjP.getContraseña());
+				pa.executeUpdate();
+			}
+			catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+		}
 		
-		
-		
-		
+		// Método EliminarPersona
+		public void EliminarPersona(String codigo) {
+								
+			try {
+				pa = cn.prepareCall("call EliminarPersona(?)");
+				pa.setString(1, codigo);
+				pa.executeUpdate();
+			}
+			catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+		}
 		
 }

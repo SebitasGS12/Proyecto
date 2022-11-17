@@ -110,20 +110,51 @@ public class clsConexionVendedores {
 		
 	}
 	// Método InsertarEmpelados
-		public void InsertarEmpleados(Empleado ObjA) {
-						
-			try {
-				pa = cn.prepareCall("call InsertarVendedores(?,?,?)");
-				pa.setString(1, ObjA.getID_Emp());
-				pa.setString(2, ObjA.getPuesto());
-				pa.setInt(3, ObjA.getDni_Persona());
+	public void InsertarEmpleados(Empleado ObjE) {
+					
+		try {
+			pa = cn.prepareCall("call InsertarVendedores(?,?,?)");
+			pa.setString(1, ObjE.getID_Emp());
+			pa.setString(2, ObjE.getPuesto());
+			pa.setInt(3, ObjE.getDni_Persona());
 
-				pa.executeUpdate();
-			}
-			catch (Exception e) {
-				System.out.println(e.getMessage());
-			}
+			pa.executeUpdate();
 		}
+		catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+		
+	
+	// Método ModificarArticulos
+	public void ModificarVendedores(Empleado ObjE) {
+						
+		try {
+			pa = cn.prepareCall("call ModificarVendedores(?,?,?)");
+			pa.setString(1, ObjE.getID_Emp());
+			pa.setString(2, ObjE.getPuesto());
+			pa.setInt(3, ObjE.getDni_Persona());
+			pa.executeUpdate();
+		}
+		catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	// Método EliminarVendedores
+	public void EliminarVendedores(String codigo) {
+							
+		try {
+			pa = cn.prepareCall("call EliminarVendedores(?)");
+			pa.setString(1, codigo);
+			pa.executeUpdate();
+		}
+		catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
+		
 		
 	
 	

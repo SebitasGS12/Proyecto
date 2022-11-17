@@ -29,6 +29,15 @@ public class NgcEmpleado {
 		ObjEmp.InsertarEmpleados(Emp);
 		
 	}
+	
+	public void Modificar(Empleado Emp) {
+		ObjEmp.ModificarVendedores(Emp);
+	}
+	
+	public void Eliminar(String cod) {
+		ObjEmp.EliminarVendedores(cod);
+	}
+	
 	public int tamanio() {
 		return  Lista().size();
 		

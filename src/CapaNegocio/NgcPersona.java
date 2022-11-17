@@ -28,6 +28,15 @@ public class NgcPersona {
 		ObjPersona.InsertarPersona(ObjP);
 	}
 	
+	public void Modificar(Persona ObjP) {
+		ObjPersona.ModificarPersona(ObjP);
+	}
+	
+	public void Eliminar(String cod) {
+		ObjPersona.EliminarPersona(cod);
+	}
+	
+	
 	
 
 }

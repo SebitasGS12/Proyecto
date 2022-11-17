@@ -36,8 +36,9 @@ import javax.swing.JCheckBox;
 import javax.swing.JPopupMenu;
 import java.awt.Component;
 import javax.swing.JMenuItem;
+import java.awt.event.MouseListener;
 
-public class GestorVendedores extends JDialog implements ActionListener {
+public class GestorVendedores extends JDialog implements ActionListener, MouseListener {
 	
 	private NgcEmpleado ObjNEmp;
 	private NgcPersona ObjNPer;
@@ -120,6 +121,7 @@ public class GestorVendedores extends JDialog implements ActionListener {
 		getContentPane().add(btnVisualizar);
 		
 		btnEliminar = new JButton("ELIMINAR");
+		btnEliminar.addActionListener(this);
 		btnEliminar.setIcon(new ImageIcon(GestorVendedores.class.getResource("/img/basura.png")));
 		btnEliminar.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 13));
 		btnEliminar.setBounds(550, 471, 167, 79);
@@ -148,6 +150,7 @@ public class GestorVendedores extends JDialog implements ActionListener {
 		getContentPane().add(lblGestorDeVendedores);
 		
 		scrollPane = new JScrollPane();
+		scrollPane.addMouseListener(this);
 		scrollPane.setBounds(10, 90, 707, 370);
 		getContentPane().add(scrollPane);
 		
@@ -189,6 +192,9 @@ public class GestorVendedores extends JDialog implements ActionListener {
 	}
 	
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnEliminar) {
+			actionPerformedBtnEliminar(e);
+		}
 		if (e.getSource() == mnConvEmp) {
 			actionPerformedmnConvEmp(e);
 		}
@@ -238,6 +244,21 @@ public class GestorVendedores extends JDialog implements ActionListener {
 		}
 
 	}
+	
+	
+	
+	protected void actionPerformedBtnEliminar(ActionEvent e) {
+		int i = tabla.getSelectedRow();
+		NgcEmpleado nEmp = new NgcEmpleado();
+		
+		
+		int flag = JOptionPane.showConfirmDialog( null, "¿Desea Eliminar", "Alerta", 0);
+
+		
+		
+		
+	}
+	
 	
 	public void CargarTabla2(Empleado Emp) {
 		String Columnas[] = {"DNI_Emp", "ID_Emp", "Puesto", "Nombre", "Apellido"};
@@ -322,6 +343,7 @@ public class GestorVendedores extends JDialog implements ActionListener {
 		component.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
 				if (e.isPopupTrigger()) {
+					System.out.println("hola");
 					showMenu(e);
 				}
 			}
@@ -333,7 +355,42 @@ public class GestorVendedores extends JDialog implements ActionListener {
 			private void showMenu(MouseEvent e) {
 				popup.show(e.getComponent(), e.getX(), e.getY());
 			}
+			
+
 		});
 	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
+	
 
 }

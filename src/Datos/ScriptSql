@@ -91,7 +91,8 @@ CREATE TABLE `productos` (
  insert into persona value (78472902,'Ricardo Agusto','Diaz Gonzales','rics031_d@ventas.com',32,'ricasrfo2002');
  insert into persona value (84729393,'Carolina Alfonsina','Ramirez Mendoza','carol_13as@ventas.com',31,'anfosne2202442');
  insert into persona value (39300282,'Julianna Carmen','Chavez Espinoza','jualina-232@ventas.com',40,'0402chabvecarm0');
- 
+
+
 
  insert into admin value ('00001',73435810);
  insert into admin value ('00002',27273929);
@@ -100,7 +101,8 @@ CREATE TABLE `productos` (
  insert into empleado value ('111','C31',98342465);
  insert into empleado value ('112','A22',83729492);
  insert into empleado value ('113','B03',93849572);
- insert into empleado value ('114','D42',03132941);
+ insert into empleado value ('114','D42',30132941);
+ 
  insert into empleado value ('115','F25',94727222);
  insert into empleado value ('116','B16',78472902);
  insert into empleado value ('117','C07',84729393);
@@ -219,6 +221,20 @@ delimiter ;
 
 /**Procedimientos Persona**/
 
+-- Procedimeientos Persona -- ListarPersona
+drop procedure if exists ListarPersona;
+
+delimiter @@
+create procedure ListarPersona()
+begin
+	
+	select * from persona;
+
+end @@
+delimiter ;
+
+-- call ListarPersona();
+
 -- Procedimeientos Persona -- BuscarPersonaDNI
 drop procedure if exists BuscarPersonaDNI;
 
@@ -249,8 +265,8 @@ delimiter ;
 -- call InsertarPersona();
 
 
-select * from persona;
 
+ 
 /**Procedimientos Admin**/
 -- Procedimeientos Admin -- BuscarAdminDNI
 drop procedure if exists BuscarAdminDNI;

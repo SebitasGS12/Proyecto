@@ -8,6 +8,8 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import CapaNegocio.NgcPersona;
+import Clases.Persona;
 import Datos.EmailSender;
 
 import java.awt.Color;
@@ -92,7 +94,8 @@ public class FrmCrearNuevaCuenta extends JDialog implements ActionListener {
 		panel.setLayout(null);
 		
 		lblNewLabel = new JLabel("Datos Personales");
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNewLabel.setForeground(new Color(255, 51, 0));
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblNewLabel.setBounds(10, 0, 197, 17);
 		panel.add(lblNewLabel);
 		
@@ -219,11 +222,32 @@ public class FrmCrearNuevaCuenta extends JDialog implements ActionListener {
 		
 		String datos = "\n Tu DNI es : "+ txtDni.getText() + " y tu edad es: "+ txtEdad.getText();
 		
-		String infor = "\n El correo ingresado es : "+ txtCorreo.getText() +" y te enviamos tu contraseña "+ txtContraseña.getText();
+		String infor = "\n El correo ingresado es : "+ txtCorreo.getText() +" y te enviamos tu contraseña :"+ txtContraseña.getText();
 		
 		String des = "\nUn administrador verificara tus datos para poder darte acceso al programa como empleado";
+		try {
+			NgcPersona gPer = new NgcPersona();
+			Persona pe = new Persona();
+			pe.setDni_Persona(Integer.parseInt(txtDni.getText()));
+			pe.setNombrePersona(txtNombre.getText().trim());
+			pe.setApellidosPersona(txtAp.getText().trim());
+			pe.setCorreo( txtCorreo.getText());
+			pe.setEdad(Integer.parseInt(txtEdad.getText()));
+			pe.setContraseña( txtContraseña.getText().trim());
+			em.enviarConGMail(correo, "Envio de Datos", con  + datos + infor + des);
+			gPer.Insertar(pe);
+			
+			JOptionPane.showMessageDialog(contentPanel,"Cuenta Creada Verifica tu Correo :) ");
+			dispose();
+			
+			
+			
+		} catch (Exception e2) {
+			JOptionPane.showMessageDialog(contentPanel,e);
+		}
 		
-		em.enviarConGMail(correo, "Envio de Datos", con  + datos + infor + des);
+		
+		
 		
 		//Agregar como persona
 		
@@ -235,12 +259,12 @@ public class FrmCrearNuevaCuenta extends JDialog implements ActionListener {
 		int cont = 4;
 		
 		String nombre,apellido,edad,dni;
-		nombre = txtNombre.getText();
-		apellido = txtAp.getText();
-		edad = txtEdad.getText();
-		dni = txtDni.getText();
+		nombre = txtNombre.getText().trim();
+		apellido = txtAp.getText().trim();
+		edad = txtEdad.getText().trim();
+		dni = txtDni.getText().trim();
 		
-		if (nombre.matches("[A-Za-z]{3,20}\\\\s[A-Za-z]{3,20}|[A-Za-z]{3,20}")) {
+		if (nombre.matches("[A-Za-z]{3,20}\\s[A-Za-z]{3,20}|[A-Za-z]{3,20}")) {
 
 			lblCheckNombre.setText("Valido");
 			lblCheckNombre.setForeground(Color.GREEN);
@@ -252,7 +276,7 @@ public class FrmCrearNuevaCuenta extends JDialog implements ActionListener {
 			cont--;
 		}
 	
-		if (apellido.matches("[A-Za-z]{3,20}\\\\s[A-Za-z]{3,20}|[A-Za-z]{3,20}")) {
+		if (apellido.matches("[A-Za-z]{3,20}\\s[A-Za-z]{3,20}|[A-Za-z]{3,20}")) {
 
 			lblCheckAp.setText("Valido");
 			lblCheckAp.setForeground(Color.GREEN);
@@ -320,8 +344,10 @@ public class FrmCrearNuevaCuenta extends JDialog implements ActionListener {
 			}
 
 			if (aux == "") {
-
+				JOptionPane.showMessageDialog(contentPanel, "Datos Validos!");	
+				
 				panel_1.add(btnCrearCuenta);
+				
 				panel_1.repaint();
 				
 			}else {

@@ -10,8 +10,13 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import CapaNegocio.NgcAdmin;
+import CapaNegocio.NgcEmpleado;
 import CapaNegocio.NgcPersona;
+import Clases.Admin;
+import Clases.Empleado;
 import Clases.Persona;
+import Formulario.FrmCrearNuevaCuenta;
 
 import java.awt.Toolkit;
 import javax.swing.JLabel;
@@ -41,6 +46,7 @@ public class IniciarSesion extends JDialog implements ActionListener {
 	private JButton btnOlvidarContraseña;
 	private JButton btnCrearNuevaCuenta;
 
+
 	/**
 	 * Launch the application.
 	 */
@@ -68,6 +74,7 @@ public class IniciarSesion extends JDialog implements ActionListener {
 		getContentPane().add(btnOlvidarContraseña);
 		
 		btnCrearNuevaCuenta = new JButton("Crear cuenta nueva");
+		btnCrearNuevaCuenta.addActionListener(this);
 		btnCrearNuevaCuenta.setBounds(751, 232, 214, 21);
 		getContentPane().add(btnCrearNuevaCuenta);
 
@@ -84,13 +91,13 @@ public class IniciarSesion extends JDialog implements ActionListener {
 		getContentPane().add(btnIniciarSesion);
 		
 		txtPass = new JTextField();
-		txtPass.setText("urtiaga92920");
+		txtPass.setText("quispevens2");
 		txtPass.setBackground(SystemColor.inactiveCaptionBorder);
 		txtPass.setBounds(729, 148, 260, 31);
 		getContentPane().add(txtPass);
 		
 		txtDNI = new JTextField();
-		txtDNI.setText("98342465");
+		txtDNI.setText("73435810");
 		txtDNI.setHorizontalAlignment(SwingConstants.CENTER);
 		txtDNI.setColumns(10);
 		txtDNI.setBackground(SystemColor.inactiveCaptionBorder);
@@ -137,6 +144,9 @@ public class IniciarSesion extends JDialog implements ActionListener {
 		getContentPane().add(lblFondo);
 	}
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnCrearNuevaCuenta) {
+			actionPerformedBtnCrearNuevaCuenta(e);
+		}
 		if (e.getSource() == btnIniciarSesion) {
 			actionPerformedBtnIniciarSesion(e);
 		}
@@ -145,20 +155,31 @@ public class IniciarSesion extends JDialog implements ActionListener {
 		
 		
 		NgcPersona gPer = new NgcPersona();
+		NgcEmpleado gEmp = new NgcEmpleado();
+		NgcAdmin  gAdm =new NgcAdmin();
 		String codigo = txtDNI.getText(); 
 		String contraseña = txtPass.getText().toString().trim();
 		if (codigo.matches("\\d{8}")) {
 			try {
-				Persona p = gPer.BuscarDNI(Integer.parseInt(codigo));
-
-				if (p.getContraseña().equals(contraseña)) {
+				int code= Integer.parseInt(codigo);
+				Persona p = gPer.BuscarDNI(code);
+				Empleado emp = gEmp.BuscarDNI(code);
+				Admin ad = gAdm.BuscarDNI(code);
+				if (p.getContraseña().equals(contraseña) && (emp != null  || ad != null)) {
+		
 					dispose();
+					
 					MenuPrincipal mp = new MenuPrincipal(p.getDni_Persona());
 					mp.setLocationRelativeTo(getContentPane());
 					mp.setVisible(true);			
-				}			
+				}else {
+					JOptionPane.showMessageDialog(null, "Posibles Errores \n1. Usuario no existe \n2.Verifique su DNI/Contraseña"
+							+ "\n3.Administrador todavia no le otorga permisos de Empleado");
+				}	
+				
 			} catch (Exception e2) {
-				JOptionPane.showMessageDialog(null, "DNI no existe");
+				JOptionPane.showMessageDialog(null, "Posibles Errores \n1. Usuario no existe \n2.Verifique su DNI/Contraseña"
+						+ "\n3.Administrador todavia no le otorga permisos de Empleado");
 			}	
 		}else {
 			JOptionPane.showMessageDialog(null, "Ingrese un DNI valido");
@@ -166,5 +187,19 @@ public class IniciarSesion extends JDialog implements ActionListener {
 
 		
 		
+	}
+	protected void actionPerformedBtnCrearNuevaCuenta(ActionEvent e) {
+		
+		FrmCrearNuevaCuenta cnc = new FrmCrearNuevaCuenta();
+		cnc.setLocationRelativeTo(getContentPane());
+		cnc.setVisible(true);		
+		
+	}
+	protected void actionPerformedBtnOlvidarContraseña(ActionEvent e) {
+	
+	
+	
+	
+	
 	}
 }

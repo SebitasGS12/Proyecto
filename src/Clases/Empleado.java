@@ -14,6 +14,12 @@ public class Empleado extends Persona {
 		ID_Emp = iD_Emp;
 		Puesto = puesto;
 	}
+	
+	public Empleado(String iD_Emp, String puesto,int dni_Persona) {
+		super(dni_Persona);
+		ID_Emp = iD_Emp;
+		Puesto = puesto;
+	}
 
 
 

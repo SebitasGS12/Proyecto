@@ -34,6 +34,32 @@ public class clsConexionPersona {
 			}
 			
 		}
+		//Metodo Listar
+		
+		public ArrayList<Persona> ListarPersona(){
+			
+			Lista = new ArrayList<>();
+			String SQL = "call ListarPersona()";
+			try {
+				pa = cn.prepareCall(SQL);
+				rs = pa.executeQuery();
+				while (rs.next()) {
+					Persona ObjP = new Persona(
+							rs.getInt("Dni_Persona"),
+							rs.getString("nombrePersona"),
+							rs.getString("apellidosPersona"),
+							rs.getString("correo"),
+							rs.getInt("edad"),
+							rs.getString("contraseña")
+							);
+					Lista.add(ObjP);
+				}
+			}
+			catch (Exception e) {
+				System.out.println(e.getMessage() );
+			}
+			return Lista;
+		}
 		
 		//Metodo Buscar DNI
 		
@@ -61,4 +87,28 @@ public class clsConexionPersona {
 			return ObjP;
 			
 		}
+		
+		// Método InsertarPersona
+		public void InsertarPersona(Persona ObjP) {
+						
+			try {
+				pa = cn.prepareCall("call InsertarPersona(?,?,?,?,?,?)");
+				pa.setInt(1, ObjP.getDni_Persona());
+				pa.setString(2, ObjP.getNombrePersona());
+				pa.setString(3, ObjP.getApellidosPersona());
+				pa.setString(4, ObjP.getCorreo());
+				pa.setInt(5, ObjP.getEdad());
+				pa.setString(6, ObjP.getContraseña());
+				pa.executeUpdate();
+			}
+			catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+		}
+
+		
+		
+		
+		
+		
 }

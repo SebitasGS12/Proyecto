@@ -12,20 +12,11 @@ import javax.mail.Transport;
 
 
 public class EmailSender {
-	
-	/*public static void main(String[] args) {
-		
-		
-	    String destinatario =  "sebasgoy16@gmail.com"; //A quien le quieres escribir.
-	    String asunto = "Correo de prueba enviado desde Java";
-	    String cuerpo = "Esta es una prueba de correo...";
 
-	    enviarConGMail(destinatario, asunto, cuerpo);
-	}*/
 	
 	public static void enviarConGMail(String destinatario, String asunto, String cuerpo) {
 	    //La dirección de correo de envío
-	    String remitente = "sebitasgoy@gmail.com";
+	    String remitente = "sebitagoy@gmail.com";
 	    //La clave de aplicación obtenida según se explica en este artículo:
 	    String claveemail = "jbiwepdfzkuffptz";
 

@@ -109,6 +109,23 @@ public class clsConexionVendedores {
 		return ObjE;
 		
 	}
+	// Método InsertarEmpelados
+		public void InsertarEmpleados(Empleado ObjA) {
+						
+			try {
+				pa = cn.prepareCall("call InsertarVendedores(?,?,?)");
+				pa.setString(1, ObjA.getID_Emp());
+				pa.setString(2, ObjA.getPuesto());
+				pa.setInt(3, ObjA.getDni_Persona());
+
+				pa.executeUpdate();
+			}
+			catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+		}
+		
+	
 	
 	
 	

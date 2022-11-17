@@ -10,7 +10,6 @@ public class Persona {
 	private int edad;
 	private String contraseña ;
 
-
 	//Constructor
 
 	public Persona(int dni_Persona, String nombrePersona, String apellidosPersona, String correo, int edad,String contraseña) {
@@ -31,6 +30,9 @@ public class Persona {
 	
 	public Persona(int dni_Persona) {
 		this.Dni_Persona = dni_Persona;
+	}
+	public Persona() {
+		
 	}
 
 	

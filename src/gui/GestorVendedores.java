@@ -19,26 +19,38 @@ import javax.swing.JScrollPane;
 import java.awt.SystemColor;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 
+import CapaNegocio.NgcAdmin;
 import CapaNegocio.NgcEmpleado;
+import CapaNegocio.NgcPersona;
 import Clases.Empleado;
-
+import Clases.Persona;
+import Formulario.FrmConvertirEmpleado;
 
 import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JDesktopPane;
+import javax.swing.JCheckBox;
+import javax.swing.JPopupMenu;
+import java.awt.Component;
+import javax.swing.JMenuItem;
 
 public class GestorVendedores extends JDialog implements ActionListener {
 	
 	private NgcEmpleado ObjNEmp;
+	private NgcPersona ObjNPer;
+	private NgcAdmin objNAdm;
 	private Empleado ObjEmpSelect;
-	private ArrayList<Empleado> Lista;
+	private Persona Per;
+	private int cont = 0 ;
+	private ArrayList<Empleado> ListaEmp;
+	private ArrayList<Persona> ListaPer;
 	private JButton btnEditar;
 	private JButton btnVisualizar;
 	private JButton btnEliminar;
 	private JButton btnAgregar;
-	private JLabel i1;
 	private JLabel i3;
 	private JLabel i2;
 	private JLabel lblGestorDeVendedores;
@@ -46,6 +58,9 @@ public class GestorVendedores extends JDialog implements ActionListener {
 	private JTable tabla;
 	private JLabel lblSalir;
 	private static int Dni; 
+	private JButton btnVerPersonas;
+	private JPopupMenu popupMenu;
+	private JMenuItem mnConvEmp;
 	/**
 	 * Launch the application.
 	 */
@@ -116,11 +131,6 @@ public class GestorVendedores extends JDialog implements ActionListener {
 		btnAgregar.setBounds(10, 471, 167, 79);
 		getContentPane().add(btnAgregar);
 		
-		i1 = new JLabel("");
-		i1.setIcon(new ImageIcon(GestorVendedores.class.getResource("/img/comercio.png")));
-		i1.setBounds(753, 22, 147, 169);
-		getContentPane().add(i1);
-		
 		i3 = new JLabel("");
 		i3.setIcon(new ImageIcon(GestorVendedores.class.getResource("/img/bienes.png")));
 		i3.setBounds(753, 359, 147, 163);
@@ -144,28 +154,55 @@ public class GestorVendedores extends JDialog implements ActionListener {
 		tabla = new JTable();
 		tabla.setFillsViewportHeight(true);
 		scrollPane.setViewportView(tabla);
+		
+		popupMenu = new JPopupMenu();
+		addPopup(tabla, popupMenu);
+		
+		mnConvEmp = new JMenuItem("Convertir A Empleado");
+		mnConvEmp.addActionListener(this);
+		popupMenu.add(mnConvEmp);
+		
+		btnVerPersonas = new JButton("");
+		btnVerPersonas.addActionListener(this);
+		btnVerPersonas.setIcon(new ImageIcon(GestorVendedores.class.getResource("/img/comercio.png")));
+		btnVerPersonas.setBounds(747, 36, 147, 145);
+		getContentPane().add(btnVerPersonas);
 
-		CargarTabla();
+		 CargarTabla();
 		
 		
 	}
 	public void CargarTabla() {
 		String Columnas[] = {"DNI_Emp", "ID_Emp", "Puesto", "Nombre", "Apellido"};
 		ObjNEmp = new NgcEmpleado();
-		Lista = ObjNEmp.Lista();
-		String Filas[][] = new String[Lista.size()][5];
-		for (int i = 0; i < Lista.size(); i++) {
-			Filas[i][0] =  String.valueOf(Lista.get(i).getDni_Persona());
-			Filas[i][1] = Lista.get(i).getID_Emp();
-			Filas[i][2] = String.valueOf(Lista.get(i).getPuesto());
-			Filas[i][3] = String.valueOf(Lista.get(i).getNombrePersona());
-			Filas[i][4] = String.valueOf(Lista.get(i).getApellidosPersona());
+		ListaEmp = ObjNEmp.Lista();
+		String Filas[][] = new String[ListaEmp.size()][5];
+		for (int i = 0; i < ListaEmp.size(); i++) {
+			Filas[i][0] =  String.valueOf(ListaEmp.get(i).getDni_Persona());
+			Filas[i][1] = ListaEmp.get(i).getID_Emp();
+			Filas[i][2] = String.valueOf(ListaEmp.get(i).getPuesto());
+			Filas[i][3] = String.valueOf(ListaEmp.get(i).getNombrePersona());
+			Filas[i][4] = String.valueOf(ListaEmp.get(i).getApellidosPersona());
 		}
 		DefaultTableModel MiModelo = new DefaultTableModel(Filas, Columnas);
 		tabla.setModel(MiModelo);
 	}
 	
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == mnConvEmp) {
+			actionPerformedmnConvEmp(e);
+		}
+		if (e.getSource() == btnVerPersonas) {
+			
+			if( cont == 0 ) {
+				CargarTablaPersonas();
+				cont = 1;
+			}else if(cont == 1) {
+				CargarTabla();
+				cont = 0;
+			}
+			
+		}
 		if (e.getSource() == btnVisualizar) {
 			actionPerformedBtnVisualizar(e);
 		}
@@ -176,21 +213,24 @@ public class GestorVendedores extends JDialog implements ActionListener {
 		String textoguia = "Ingrese DNI o ID del Empleado";
 		NgcEmpleado nEmp = new NgcEmpleado();
 		try {
-			code = JOptionPane.showInputDialog(this, textoguia,"Vizualisar",-1).toString();
-			
-			if (code.matches("[0][0][0]")) {//Codigo especial para regresar a la tabla principal
-				
-				CargarTabla();
-				
-			}else if(code.matches("\\d{8}")){	
-				ObjEmpSelect = nEmp.BuscarDNI(Integer.parseInt(code));
-				CargarTabla2(ObjEmpSelect);
-			}else if(code.matches("\\d{3}")){
-				ObjEmpSelect = nEmp.BuscarID(code);
-				CargarTabla2(ObjEmpSelect);
-				
-			}else {
-				JOptionPane.showMessageDialog(null, "Dato Ingresado Incorrectamente");
+			code = JOptionPane.showInputDialog(this, textoguia,"Vizualisar",-1);
+			if (code != null) {
+				try {
+					if (code.matches("[0][0][0]")) {//Codigo especial para regresar a la tabla principal
+						CargarTabla();
+						
+					}else if(code.matches("\\d{8}")){	
+						ObjEmpSelect = nEmp.BuscarDNI(Integer.parseInt(code));
+						CargarTabla2(ObjEmpSelect);
+					}else if(code.matches("\\d{3}")){
+						
+						ObjEmpSelect = nEmp.BuscarID(code);
+						CargarTabla2(ObjEmpSelect);
+						
+					}
+				} catch (Exception e2) {
+					JOptionPane.showMessageDialog(null, "Codigo o ID no valido");
+				}
 			}
 
 		} catch (Exception e2) {
@@ -202,7 +242,7 @@ public class GestorVendedores extends JDialog implements ActionListener {
 	public void CargarTabla2(Empleado Emp) {
 		String Columnas[] = {"DNI_Emp", "ID_Emp", "Puesto", "Nombre", "Apellido"};
 		ObjNEmp = new NgcEmpleado();
-		Lista = ObjNEmp.Lista();
+		ListaEmp = ObjNEmp.Lista();
 		String Filas[][] = new String[1][5];
 		
 		Filas[0][0] =  String.valueOf(Emp.getDni_Persona());
@@ -215,4 +255,85 @@ public class GestorVendedores extends JDialog implements ActionListener {
 		tabla.setModel(MiModelo);
 	}
 	
+	public void CargarTablaPersonas() {
+		
+		
+		
+		String Columnas[] = {"Dni_Persona", "Nombre", "Apellido","Empleado"};
+		ObjNPer = new NgcPersona();
+		ObjNEmp = new NgcEmpleado();
+		objNAdm = new NgcAdmin();
+		
+		ListaPer = ObjNPer.Lista();
+		String Filas[][] = new String[ListaPer.size()][5];
+		int aux = 0;
+		
+		for (int i = 0; i < ListaPer.size(); i++) {
+			int DNI =  ListaPer.get(i).getDni_Persona();
+			
+			if ( (ObjNEmp.BuscarDNI(DNI) == null) &&  (objNAdm.BuscarDNI( DNI) == null )) {
+				Filas[aux][0] =  String.valueOf(ListaPer.get(i).getDni_Persona());
+				Filas[aux][1] = String.valueOf(ListaPer.get(i).getNombrePersona());
+				Filas[aux][2] = String.valueOf(ListaPer.get(i).getApellidosPersona());
+				Filas[aux][3] = "Persona";
+				aux++;
+			}
+			
+		}
+		DefaultTableModel MiModelo = new DefaultTableModel(Filas, Columnas);
+		
+		tabla.setModel(MiModelo);
+
+		
+
+	}
+
+	protected void actionPerformedmnConvEmp(ActionEvent e) {
+		try {
+			int fila = tabla.getSelectedRow();
+			try {
+				int dniPersona = Integer.parseInt(tabla.getValueAt(fila, 0).toString());
+				
+				if (ObjNEmp.BuscarDNI(dniPersona) == null) {
+
+					FrmConvertirEmpleado ce = new FrmConvertirEmpleado(dniPersona);
+					ce.setLocationRelativeTo(getContentPane());
+					ce.setVisible(true);	
+					
+					
+				}else {
+					JOptionPane.showMessageDialog(null, "Ya es un Empleado");
+				}
+				
+			} catch (Exception e2) {
+				JOptionPane.showMessageDialog(null, "No existen valores en ese campo");
+			}
+			
+		} catch (Exception e2) {
+			JOptionPane.showMessageDialog(null, "Seleccione una fila ");
+		}
+		
+		
+		
+		
+	}
+	
+	private static void addPopup(Component component, final JPopupMenu popup) {
+		component.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					showMenu(e);
+				}
+			}
+			public void mouseReleased(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					showMenu(e);
+				}
+			}
+			private void showMenu(MouseEvent e) {
+				popup.show(e.getComponent(), e.getX(), e.getY());
+			}
+		});
+	}
+
 }

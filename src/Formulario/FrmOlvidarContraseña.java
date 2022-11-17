@@ -7,6 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import java.awt.Color;
 
 public class FrmOlvidarContraseña extends JDialog {
 
@@ -29,8 +30,9 @@ public class FrmOlvidarContraseña extends JDialog {
 	 * Create the dialog.
 	 */
 	public FrmOlvidarContraseña() {
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 440, 525);
 		getContentPane().setLayout(new BorderLayout());
+		contentPanel.setBackground(new Color(144, 238, 144));
 		contentPanel.setLayout(new FlowLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);

@@ -35,7 +35,6 @@ public class GestorInventario extends JDialog implements MouseListener {
 	private JPanel panel;
 	private JTable tbDatos;
 	private JPanel panelMenu;
-	private JLabel lblCargarDatos;
 	private JLabel lblEliminarProducto;
 	private JLabel lblMenuPrincipal;
 	private JButton btnAgregarProducto;
@@ -78,14 +77,6 @@ public class GestorInventario extends JDialog implements MouseListener {
 		panel.setBounds(0, 0, 177, 661);
 		contentPanel.add(panel);
 		panel.setLayout(null);
-		
-		lblCargarDatos = new JLabel("");
-		lblCargarDatos.setToolTipText("Cargar Datos");
-		lblCargarDatos.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		lblCargarDatos.setIcon(new ImageIcon(GestorInventario.class.getResource("/img/imgCargarDatos.png")));
-		lblCargarDatos.setHorizontalAlignment(SwingConstants.CENTER);
-		lblCargarDatos.setBounds(20, 372, 131, 121);
-		panel.add(lblCargarDatos);
 		
 		lblEliminarProducto = new JLabel("");
 		lblEliminarProducto.setToolTipText("Eliminar Datos");

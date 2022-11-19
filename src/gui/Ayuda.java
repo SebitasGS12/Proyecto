@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.ImageIcon;
@@ -12,15 +13,20 @@ import javax.swing.JPanel;
 import javax.swing.JButton;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.awt.event.ActionEvent;
+import javax.swing.JScrollPane;
 
 public class Ayuda extends JDialog implements ActionListener {
 	private JLabel lblCabecera;
 	private JPanel panel;
 	private JButton btnInfo;
 	private JButton btnManual;
-	private JButton btnAcerca;
 	private JLabel lblAcerca;
+	private String informe = "https://docs.google.com/document/d/1SAlOkb8df6uCPOmRMIG9-CgZT9qXIOdS/edit?usp=sharing&ouid=109918201001160918039&rtpof=true&sd=true" ;
+	private String  videoManual = "";
 
 	/**
 	 * Launch the application.
@@ -79,25 +85,16 @@ public class Ayuda extends JDialog implements ActionListener {
 		btnManual.setBounds(10, 134, 142, 70);
 		panel.add(btnManual);
 		
-		btnAcerca = new JButton("Acerca De");
-		btnAcerca.addActionListener(this);
-		btnAcerca.setForeground(Color.LIGHT_GRAY);
-		btnAcerca.setBackground(new Color(255, 102, 102));
-		btnAcerca.setBounds(10, 242, 142, 50);
-		panel.add(btnAcerca);
-		
 		lblAcerca = new JLabel("");
 		lblAcerca.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAcerca.setIcon(new ImageIcon(Ayuda.class.getResource("/img/ayuda_contacto.png")));
 		lblAcerca.setBounds(170, 94, 311, 456);
 		getContentPane().add(lblAcerca);
 		
+		
 
 	}
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == btnAcerca) {
-			actionPerformedBtnAcerca(e);
-		}
 		if (e.getSource() == btnManual) {
 			actionPerformedBtnManual(e);
 		}
@@ -106,19 +103,32 @@ public class Ayuda extends JDialog implements ActionListener {
 		}
 	}
 	protected void actionPerformedBtnInfo(ActionEvent e) {
+		try {
+			
+			URL url = new URL(informe);
+			
+			Desktop.getDesktop().browse(url.toURI());
+			
+		}catch (IOException | URISyntaxException e1) {
+            e1.getMessage();
+        }
+			
 		
 		
 	}
 	protected void actionPerformedBtnManual(ActionEvent e) {
 		
+		try {
+			
+			URL url = new URL(videoManual);
+			
+			Desktop.getDesktop().browse(url.toURI());
+			
+		}catch (IOException | URISyntaxException e1) {
+            e1.getMessage();
+        }
 		
 		
-	}
-	protected void actionPerformedBtnAcerca(ActionEvent e) {
 		
-		
-		
-	
-	
 	}
 }

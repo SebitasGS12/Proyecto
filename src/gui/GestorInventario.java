@@ -28,20 +28,21 @@ import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseEvent;
+import javax.swing.border.BevelBorder;
 
-public class GestorInventario extends JDialog implements MouseListener {
+public class GestorInventario extends JDialog implements MouseListener, ActionListener {
 
 	private final JPanel contentPanel = new JPanel();
 	private JPanel panel;
 	private JTable tbDatos;
 	private JPanel panelMenu;
-	private JLabel lblEliminarProducto;
 	private JLabel lblMenuPrincipal;
 	private JButton btnAgregarProducto;
 	private JButton btnEditarProducto;
-	private JButton btnGuardarDatos;
 	private JButton btnExportarDatos;
 	private static int Dni ; 
+	private JButton btneliminarproducto;
+	private JButton btnNewButton;
 	
 	
 	/**
@@ -78,14 +79,6 @@ public class GestorInventario extends JDialog implements MouseListener {
 		contentPanel.add(panel);
 		panel.setLayout(null);
 		
-		lblEliminarProducto = new JLabel("");
-		lblEliminarProducto.setToolTipText("Eliminar Datos");
-		lblEliminarProducto.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		lblEliminarProducto.setHorizontalAlignment(SwingConstants.CENTER);
-		lblEliminarProducto.setIcon(new ImageIcon(GestorInventario.class.getResource("/img/imgEliminarProducto.png")));
-		lblEliminarProducto.setBounds(32, 217, 119, 111);
-		panel.add(lblEliminarProducto);
-		
 		lblMenuPrincipal = new JLabel("");
 		lblMenuPrincipal.setToolTipText("Menu Principal");
 		lblMenuPrincipal.addMouseListener(this);
@@ -107,6 +100,15 @@ public class GestorInventario extends JDialog implements MouseListener {
 		
 		panel.add(lblMenuPrincipal);
 		
+		btnNewButton = new JButton("");
+		btnNewButton.setToolTipText("Buscar Producto");
+		btnNewButton.setBackground(new Color(152, 251, 152));
+		btnNewButton.setDefaultCapable(false);
+		btnNewButton.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		btnNewButton.setIcon(new ImageIcon(GestorInventario.class.getResource("/img/btnAgregarPersonal.png")));
+		btnNewButton.setBounds(10, 187, 157, 167);
+		panel.add(btnNewButton);
+		
 		tbDatos = new JTable();
 		tbDatos.setBounds(187, 117, 987, 533);
 		contentPanel.add(tbDatos);
@@ -117,6 +119,7 @@ public class GestorInventario extends JDialog implements MouseListener {
 		panelMenu.setLayout(null);
 		
 		btnAgregarProducto = new JButton("<html>Agregar<br>Producto</html>");
+		btnAgregarProducto.addActionListener(this);
 		btnAgregarProducto.addMouseListener(this);
 		btnAgregarProducto.setHorizontalAlignment(SwingConstants.LEFT);
 		btnAgregarProducto.setFocusable(false);
@@ -125,18 +128,12 @@ public class GestorInventario extends JDialog implements MouseListener {
 		panelMenu.add(btnAgregarProducto);
 		
 		btnEditarProducto = new JButton("<html>Editar<br>Producto</html>");
+		btnEditarProducto.addActionListener(this);
 		btnEditarProducto.setIcon(new ImageIcon(GestorInventario.class.getResource("/img/imgEditarProducto.png")));
 		btnEditarProducto.setHorizontalAlignment(SwingConstants.LEFT);
 		btnEditarProducto.setFocusable(false);
-		btnEditarProducto.setBounds(249, 11, 169, 83);
+		btnEditarProducto.setBounds(223, 11, 169, 83);
 		panelMenu.add(btnEditarProducto);
-		
-		btnGuardarDatos = new JButton("<html>Guardar<br>Datos</html>");
-		btnGuardarDatos.setIcon(new ImageIcon(GestorInventario.class.getResource("/img/imgGuardarDatos.png")));
-		btnGuardarDatos.setHorizontalAlignment(SwingConstants.LEFT);
-		btnGuardarDatos.setFocusable(false);
-		btnGuardarDatos.setBounds(490, 11, 169, 83);
-		panelMenu.add(btnGuardarDatos);
 		
 		btnExportarDatos = new JButton("<html>Exportar<br>Datos</html>");
 		btnExportarDatos.setIcon(new ImageIcon(GestorInventario.class.getResource("/img/imgExportarDatos.png")));
@@ -144,6 +141,13 @@ public class GestorInventario extends JDialog implements MouseListener {
 		btnExportarDatos.setFocusable(false);
 		btnExportarDatos.setBounds(808, 11, 169, 83);
 		panelMenu.add(btnExportarDatos);
+		
+		btneliminarproducto = new JButton("<html>Eliminar<br>Producto</html>");
+		btneliminarproducto.setIcon(new ImageIcon(GestorInventario.class.getResource("/img/btnEliminarProducto .png")));
+		btneliminarproducto.setHorizontalAlignment(SwingConstants.LEFT);
+		btneliminarproducto.setFocusable(false);
+		btneliminarproducto.setBounds(433, 11, 169, 83);
+		panelMenu.add(btneliminarproducto);
 	}
 	
 	public void mouseClicked(MouseEvent e) {
@@ -174,5 +178,17 @@ public class GestorInventario extends JDialog implements MouseListener {
 	protected void mouseReleasedBtnNewButton(MouseEvent e) {
 		
 		
+	}
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnEditarProducto) {
+			actionPerformedBtnEditarProducto(e);
+		}
+		if (e.getSource() == btnAgregarProducto) {
+			actionPerformedBtnAgregarProducto(e);
+		}
+	}
+	protected void actionPerformedBtnAgregarProducto(ActionEvent e) {
+	}
+	protected void actionPerformedBtnEditarProducto(ActionEvent e) {
 	}
 }

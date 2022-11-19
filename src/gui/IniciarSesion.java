@@ -17,6 +17,7 @@ import Clases.Admin;
 import Clases.Empleado;
 import Clases.Persona;
 import Formulario.FrmCrearNuevaCuenta;
+import Formulario.FrmOlvidarContraseña;
 
 import java.awt.Toolkit;
 import javax.swing.JLabel;
@@ -70,6 +71,7 @@ public class IniciarSesion extends JDialog implements ActionListener {
 		getContentPane().setLayout(null);
 				
 		btnOlvidarContraseña = new JButton("¿Olvidaste tu contraseña?");
+		btnOlvidarContraseña.addActionListener(this);
 		btnOlvidarContraseña.setBounds(751, 584, 214, 31);
 		getContentPane().add(btnOlvidarContraseña);
 		
@@ -150,6 +152,9 @@ public class IniciarSesion extends JDialog implements ActionListener {
 		if (e.getSource() == btnIniciarSesion) {
 			actionPerformedBtnIniciarSesion(e);
 		}
+		if (e.getSource() == btnOlvidarContraseña) {
+			actionPerformedBtnOlvidarContraseña(e);
+		}
 	}
 	protected void actionPerformedBtnIniciarSesion(ActionEvent e) {
 		
@@ -198,7 +203,9 @@ public class IniciarSesion extends JDialog implements ActionListener {
 	protected void actionPerformedBtnOlvidarContraseña(ActionEvent e) {
 	
 	
-	
+		FrmOlvidarContraseña oc = new FrmOlvidarContraseña();
+		oc.setLocationRelativeTo(getContentPane());
+		oc.setVisible(true);		
 	
 	
 	}

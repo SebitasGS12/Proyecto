@@ -264,6 +264,38 @@ delimiter ;
 
 -- call InsertarPersona();
 
+-- Procedimeientos Persona -- ModificarPersona
+drop procedure if exists ModificarPersona
+
+delimiter @@
+create procedure ModificarPersona( xdniper int(11),xnoper varchar(40) ,xapper varchar(40),xcorr varchar(30), xed int,xcontra varchar(40))
+begin
+	/*Aca se realiza el procedimiento*/
+    
+    update persona set nombrePersona = xnoper , apellidosPersona = xapper , correo = xcorr , edad =  xed , contraseña = xcontra
+	where Dni_Persona = xdniper;
+end @@
+delimiter ; -- Por sintaxis deja un espacio
+
+-- call ModificarPersona();
+
+-- Procedimeientos Persona - EliminarPersona
+drop procedure if exists EliminarPersona
+
+delimiter @@
+create procedure EliminarPersona(dniper char(6))
+begin
+	/*Aca se realiza el procedimiento*/
+    
+    delete from persona
+    where Dni_Persona = dniper;
+    
+end @@
+delimiter ; -- Por sintaxis deja un espacio
+
+-- call EliminarPersona();
+
+
 
 
  

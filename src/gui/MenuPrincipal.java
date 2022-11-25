@@ -211,7 +211,7 @@ public class MenuPrincipal extends JFrame implements ActionListener {
 		
 
 		dispose();
-		GestorInventario gi = new GestorInventario(this.Dni);
+		GestorProducto gi = new GestorProducto(this.Dni);
 		gi.setLocationRelativeTo(contentPane);
 		gi.setVisible(true);
 

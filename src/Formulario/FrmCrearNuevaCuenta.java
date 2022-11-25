@@ -354,7 +354,8 @@ public class FrmCrearNuevaCuenta extends JDialog implements ActionListener {
 				JOptionPane.showMessageDialog(contentPanel, aux);	
 			}
 			
-		} catch (Exception e2) {
+		} catch (Exception
+				e2) {
 			JOptionPane.showMessageDialog(btnContinuar, e);
 		}
 		

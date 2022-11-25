@@ -30,11 +30,10 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseEvent;
 import javax.swing.border.BevelBorder;
 
-public class GestorInventario extends JDialog implements MouseListener, ActionListener {
+public class GestorProducto extends JDialog implements MouseListener, ActionListener {
 
 	private final JPanel contentPanel = new JPanel();
 	private JPanel panel;
-	private JTable tbDatos;
 	private JPanel panelMenu;
 	private JLabel lblMenuPrincipal;
 	private JButton btnAgregarProducto;
@@ -42,7 +41,9 @@ public class GestorInventario extends JDialog implements MouseListener, ActionLi
 	private JButton btnExportarDatos;
 	private static int Dni ; 
 	private JButton btneliminarproducto;
-	private JButton btnNewButton;
+	private JButton btnbuscarproducto;
+	private JScrollPane scrollPane;
+	private JTable table;
 	
 	
 	/**
@@ -50,7 +51,7 @@ public class GestorInventario extends JDialog implements MouseListener, ActionLi
 	 */
 	public static void main(String[] args) {
 		try {
-			GestorInventario dialog = new GestorInventario(Dni);
+			GestorProducto dialog = new GestorProducto(Dni);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -61,12 +62,12 @@ public class GestorInventario extends JDialog implements MouseListener, ActionLi
 	/**
 	 * Create the dialog.
 	 */
-	public GestorInventario(int dni) {
+	public GestorProducto(int dni) {
 		setModal(true);
 		setForeground(SystemColor.inactiveCaption);
 		setBackground(SystemColor.desktop);
 		setTitle("Gestor de Inventario");
-		setIconImage(Toolkit.getDefaultToolkit().getImage(GestorInventario.class.getResource("/img/ico.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(GestorProducto.class.getResource("/img/ico.png")));
 		setBounds(100, 100, 1200,700);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -84,7 +85,7 @@ public class GestorInventario extends JDialog implements MouseListener, ActionLi
 		lblMenuPrincipal.addMouseListener(this);
 		lblMenuPrincipal.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		lblMenuPrincipal.setHorizontalAlignment(SwingConstants.CENTER);
-		lblMenuPrincipal.setIcon(new ImageIcon(GestorInventario.class.getResource("/img/imgMenuPrincipal.png")));
+		lblMenuPrincipal.setIcon(new ImageIcon(GestorProducto.class.getResource("/img/imgMenuPrincipal.png")));
 		lblMenuPrincipal.setBounds(20, 24, 147, 111);
 		
 		lblMenuPrincipal.addMouseListener(new MouseAdapter() {
@@ -100,19 +101,6 @@ public class GestorInventario extends JDialog implements MouseListener, ActionLi
 		
 		panel.add(lblMenuPrincipal);
 		
-		btnNewButton = new JButton("");
-		btnNewButton.setToolTipText("Buscar Producto");
-		btnNewButton.setBackground(new Color(152, 251, 152));
-		btnNewButton.setDefaultCapable(false);
-		btnNewButton.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		btnNewButton.setIcon(new ImageIcon(GestorInventario.class.getResource("/img/btnAgregarPersonal.png")));
-		btnNewButton.setBounds(10, 187, 157, 167);
-		panel.add(btnNewButton);
-		
-		tbDatos = new JTable();
-		tbDatos.setBounds(187, 117, 987, 533);
-		contentPanel.add(tbDatos);
-		
 		panelMenu = new JPanel();
 		panelMenu.setBounds(187, 0, 987, 106);
 		contentPanel.add(panelMenu);
@@ -123,31 +111,46 @@ public class GestorInventario extends JDialog implements MouseListener, ActionLi
 		btnAgregarProducto.addMouseListener(this);
 		btnAgregarProducto.setHorizontalAlignment(SwingConstants.LEFT);
 		btnAgregarProducto.setFocusable(false);
-		btnAgregarProducto.setIcon(new ImageIcon(GestorInventario.class.getResource("/img/imgNuevoProducto.png")));
+		btnAgregarProducto.setIcon(new ImageIcon(GestorProducto.class.getResource("/img/imgNuevoProducto.png")));
 		btnAgregarProducto.setBounds(10, 11, 169, 83);
 		panelMenu.add(btnAgregarProducto);
 		
 		btnEditarProducto = new JButton("<html>Editar<br>Producto</html>");
 		btnEditarProducto.addActionListener(this);
-		btnEditarProducto.setIcon(new ImageIcon(GestorInventario.class.getResource("/img/imgEditarProducto.png")));
+		btnEditarProducto.setIcon(new ImageIcon(GestorProducto.class.getResource("/img/imgEditarProducto.png")));
 		btnEditarProducto.setHorizontalAlignment(SwingConstants.LEFT);
 		btnEditarProducto.setFocusable(false);
 		btnEditarProducto.setBounds(223, 11, 169, 83);
 		panelMenu.add(btnEditarProducto);
 		
 		btnExportarDatos = new JButton("<html>Exportar<br>Datos</html>");
-		btnExportarDatos.setIcon(new ImageIcon(GestorInventario.class.getResource("/img/imgExportarDatos.png")));
+		btnExportarDatos.setIcon(new ImageIcon(GestorProducto.class.getResource("/img/imgExportarDatos.png")));
 		btnExportarDatos.setHorizontalAlignment(SwingConstants.LEFT);
 		btnExportarDatos.setFocusable(false);
 		btnExportarDatos.setBounds(808, 11, 169, 83);
 		panelMenu.add(btnExportarDatos);
 		
 		btneliminarproducto = new JButton("<html>Eliminar<br>Producto</html>");
-		btneliminarproducto.setIcon(new ImageIcon(GestorInventario.class.getResource("/img/btnEliminarProducto .png")));
+		btneliminarproducto.setIcon(new ImageIcon(GestorProducto.class.getResource("/img/btnEliminarProducto .png")));
 		btneliminarproducto.setHorizontalAlignment(SwingConstants.LEFT);
 		btneliminarproducto.setFocusable(false);
-		btneliminarproducto.setBounds(433, 11, 169, 83);
+		btneliminarproducto.setBounds(417, 11, 169, 83);
 		panelMenu.add(btneliminarproducto);
+		
+		btnbuscarproducto = new JButton("<html>Buscar<br>Producto</html>");
+		btnbuscarproducto.setIcon(new ImageIcon(GestorProducto.class.getResource("/img/btnBuscar.png")));
+		btnbuscarproducto.setHorizontalAlignment(SwingConstants.LEFT);
+		btnbuscarproducto.setFocusable(false);
+		btnbuscarproducto.setBounds(612, 11, 186, 83);
+		panelMenu.add(btnbuscarproducto);
+		
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(187, 117, 987, 533);
+		contentPanel.add(scrollPane);
+		
+		table = new JTable();
+		table.setFillsViewportHeight(true);
+		scrollPane.setViewportView(table);
 	}
 	
 	public void mouseClicked(MouseEvent e) {

@@ -164,6 +164,7 @@ public class FrmConvertirEmpleado extends JDialog implements ActionListener {
 					Empleado emp = new Empleado(id, puesto, dni);
 					nEmp.Insertar(emp);
 					JOptionPane.showMessageDialog(contentPanel,"Usuario Convertido en Empleado");
+					dispose();
 					
 				}else{
 					JOptionPane.showMessageDialog(contentPanel,"ID ya Existe");

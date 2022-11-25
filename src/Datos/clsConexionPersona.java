@@ -125,11 +125,11 @@ public class clsConexionPersona {
 		}
 		
 		// Método EliminarPersona
-		public void EliminarPersona(String codigo) {
+		public void EliminarPersona(int codigo) {
 								
 			try {
 				pa = cn.prepareCall("call EliminarPersona(?)");
-				pa.setString(1, codigo);
+				pa.setInt(1, codigo);
 				pa.executeUpdate();
 			}
 			catch (Exception e) {

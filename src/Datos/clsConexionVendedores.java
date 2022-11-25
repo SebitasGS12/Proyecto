@@ -49,9 +49,7 @@ public class clsConexionVendedores {
 				Empleado ObjA = new Empleado(
 						rs.getString("ID_Emp"),
 						rs.getString("Puesto"),
-						rs.getInt("DNI_Emp"),
-						rs.getString("nombrePersona"),
-						rs.getString("apellidosPersona")
+						rs.getInt("DNI_Emp")
 						);
 				Lista.add(ObjA);
 			}
@@ -73,9 +71,7 @@ public class clsConexionVendedores {
 				ObjE = new Empleado(
 						rs.getString("ID_Emp"),
 						rs.getString("Puesto"),
-						rs.getInt("DNI_Emp"),
-						rs.getString("nombrePersona"),
-						rs.getString("apellidosPersona")
+						rs.getInt("DNI_Emp")
 						);
 				}
 			}
@@ -97,9 +93,7 @@ public class clsConexionVendedores {
 				ObjE = new Empleado(
 						rs.getString("ID_Emp"),
 						rs.getString("Puesto"),
-						rs.getInt("DNI_Emp"),
-						rs.getString("nombrePersona"),
-						rs.getString("apellidosPersona")
+						rs.getInt("DNI_Emp")
 						);
 				}
 			}

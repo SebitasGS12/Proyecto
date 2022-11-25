@@ -3,7 +3,7 @@ package CapaNegocio;
 
 import java.util.ArrayList;
 
-import Clases.Empleado;
+
 import Clases.Persona;
 import Datos.clsConexionPersona;
 
@@ -32,7 +32,7 @@ public class NgcPersona {
 		ObjPersona.ModificarPersona(ObjP);
 	}
 	
-	public void Eliminar(String cod) {
+	public void Eliminar(int cod) {
 		ObjPersona.EliminarPersona(cod);
 	}
 	

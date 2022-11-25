@@ -179,12 +179,12 @@ public class IniciarSesion extends JDialog implements ActionListener {
 					mp.setVisible(true);			
 				}else {
 					JOptionPane.showMessageDialog(null, "Posibles Errores \n1. Usuario no existe \n2.Verifique su DNI/Contraseña"
-							+ "\n3.Administrador todavia no le otorga permisos de Empleado");
+							+ "\n3.Administrador todavia no le otorga permisos de Empleado"+ "b");
 				}	
 				
 			} catch (Exception e2) {
 				JOptionPane.showMessageDialog(null, "Posibles Errores \n1. Usuario no existe \n2.Verifique su DNI/Contraseña"
-						+ "\n3.Administrador todavia no le otorga permisos de Empleado");
+						+ "\n3.Administrador todavia no le otorga permisos de Empleado"+ "a");
 			}	
 		}else {
 			JOptionPane.showMessageDialog(null, "Ingrese un DNI valido");

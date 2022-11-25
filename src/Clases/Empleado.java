@@ -9,11 +9,6 @@ public class Empleado extends Persona {
 	
 	//Constructor
 
-	public Empleado(String iD_Emp, String puesto,int dni_Persona, String nombrePersona, String apellidosPersona) {
-		super(dni_Persona, nombrePersona, apellidosPersona);
-		ID_Emp = iD_Emp;
-		Puesto = puesto;
-	}
 	
 	public Empleado(String iD_Emp, String puesto,int dni_Persona) {
 		super(dni_Persona);

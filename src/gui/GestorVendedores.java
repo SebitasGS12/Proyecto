@@ -27,6 +27,8 @@ import CapaNegocio.NgcPersona;
 import Clases.Empleado;
 import Clases.Persona;
 import Formulario.FrmConvertirEmpleado;
+import Formulario.FrmCrearNuevaCuenta;
+import Formulario.FrmEditarVendedor;
 
 import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
@@ -43,8 +45,8 @@ public class GestorVendedores extends JDialog implements ActionListener, MouseLi
 	private NgcEmpleado ObjNEmp;
 	private NgcPersona ObjNPer;
 	private NgcAdmin objNAdm;
-	private Empleado ObjEmpSelect;
-	private Persona Per;
+	private Empleado ObjEmp;
+	private Persona ObjPer;
 	private int cont = 0 ;
 	private ArrayList<Empleado> ListaEmp;
 	private ArrayList<Persona> ListaPer;
@@ -62,6 +64,9 @@ public class GestorVendedores extends JDialog implements ActionListener, MouseLi
 	private JButton btnVerPersonas;
 	private JPopupMenu popupMenu;
 	private JMenuItem mnConvEmp;
+	private DefaultTableModel MiModelo;
+	private String Estado = "";
+	
 	/**
 	 * Launch the application.
 	 */
@@ -108,6 +113,7 @@ public class GestorVendedores extends JDialog implements ActionListener, MouseLi
 		getContentPane().add(lblSalir);
 		
 		btnEditar = new JButton("EDITAR");
+		btnEditar.addActionListener(this);
 		btnEditar.setIcon(new ImageIcon(GestorVendedores.class.getResource("/img/computadora.png")));
 		btnEditar.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 13));
 		btnEditar.setBounds(187, 471, 167, 79);
@@ -128,6 +134,7 @@ public class GestorVendedores extends JDialog implements ActionListener, MouseLi
 		getContentPane().add(btnEliminar);
 		
 		btnAgregar = new JButton("AGREGAR");
+		btnAgregar.addActionListener(this);
 		btnAgregar.setIcon(new ImageIcon(GestorVendedores.class.getResource("/img/agente.png")));
 		btnAgregar.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 13));
 		btnAgregar.setBounds(10, 471, 167, 79);
@@ -171,27 +178,46 @@ public class GestorVendedores extends JDialog implements ActionListener, MouseLi
 		btnVerPersonas.setBounds(747, 36, 147, 145);
 		getContentPane().add(btnVerPersonas);
 
-		 CargarTabla();
+		CargarTabla();
 		
 		
 	}
 	public void CargarTabla() {
+		Estado = "Empleado";
+		lblGestorDeVendedores.setText("Gestor de Vendedores");
 		String Columnas[] = {"DNI_Emp", "ID_Emp", "Puesto", "Nombre", "Apellido"};
+		
 		ObjNEmp = new NgcEmpleado();
 		ListaEmp = ObjNEmp.Lista();
+		
+		
+		
+		
 		String Filas[][] = new String[ListaEmp.size()][5];
 		for (int i = 0; i < ListaEmp.size(); i++) {
-			Filas[i][0] =  String.valueOf(ListaEmp.get(i).getDni_Persona());
-			Filas[i][1] = ListaEmp.get(i).getID_Emp();
-			Filas[i][2] = String.valueOf(ListaEmp.get(i).getPuesto());
-			Filas[i][3] = String.valueOf(ListaEmp.get(i).getNombrePersona());
-			Filas[i][4] = String.valueOf(ListaEmp.get(i).getApellidosPersona());
+			ObjEmp = ListaEmp.get(i);
+			
+			ObjNPer = new NgcPersona();
+			ObjPer = ObjNPer.BuscarDNI(ObjEmp.getDni_Persona());
+			
+			
+			Filas[i][0] =  String.valueOf(ObjEmp.getDni_Persona());
+			Filas[i][1] = ObjEmp.getID_Emp();
+			Filas[i][2] = String.valueOf(ObjEmp.getPuesto());
+			Filas[i][3] = String.valueOf(ObjPer.getNombrePersona());
+			Filas[i][4] = String.valueOf(ObjPer.getApellidosPersona());
 		}
-		DefaultTableModel MiModelo = new DefaultTableModel(Filas, Columnas);
+		MiModelo = new DefaultTableModel(Filas, Columnas);
 		tabla.setModel(MiModelo);
 	}
 	
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnEditar) {
+			actionPerformedBtnEditar(e);
+		}
+		if (e.getSource() == btnAgregar) {
+			actionPerformedBtnAgregar(e);
+		}
 		if (e.getSource() == btnEliminar) {
 			actionPerformedBtnEliminar(e);
 		}
@@ -226,12 +252,12 @@ public class GestorVendedores extends JDialog implements ActionListener, MouseLi
 						CargarTabla();
 						
 					}else if(code.matches("\\d{8}")){	
-						ObjEmpSelect = nEmp.BuscarDNI(Integer.parseInt(code));
-						CargarTabla2(ObjEmpSelect);
+						ObjEmp = nEmp.BuscarDNI(Integer.parseInt(code));
+						CargarTabla2(ObjEmp);
 					}else if(code.matches("\\d{3}")){
 						
-						ObjEmpSelect = nEmp.BuscarID(code);
-						CargarTabla2(ObjEmpSelect);
+						ObjEmp = nEmp.BuscarID(code);
+						CargarTabla2(ObjEmp);
 						
 					}
 				} catch (Exception e2) {
@@ -248,11 +274,54 @@ public class GestorVendedores extends JDialog implements ActionListener, MouseLi
 	
 	
 	protected void actionPerformedBtnEliminar(ActionEvent e) {
-		int i = tabla.getSelectedRow();
-		NgcEmpleado nEmp = new NgcEmpleado();
-		
-		
-		int flag = JOptionPane.showConfirmDialog( null, "¿Desea Eliminar", "Alerta", 0);
+		try {
+			int i = tabla.getSelectedRow();
+			if ( i == -1) {
+				throw new Exception();
+			}
+			try {
+				if (Estado.equals("Empleado")) {
+					NgcEmpleado nEmp = new NgcEmpleado();
+					
+					ObjEmp =  nEmp.Lista().get(i);
+					int flag1 = JOptionPane.showConfirmDialog( null, "¿Desea Eliminar", "Alerta", 0);
+					if (flag1 == 0) {
+						nEmp.Eliminar( ObjEmp.getID_Emp());
+						JOptionPane.showMessageDialog(null, "Vendedor Eliminado");
+						CargarTabla();
+					
+					}
+					
+				}else if(Estado.equals("Persona")){
+					
+					NgcPersona nPer = new NgcPersona();
+					
+					ObjPer = nPer.Lista().get(i);
+					int flag2 = JOptionPane.showConfirmDialog( null, "¿Desea Eliminar", "Alerta", 0);
+					
+					if (flag2 == 0) {
+
+						int dniPer  =ObjPer.getDni_Persona() ;
+						nPer.Eliminar(dniPer);
+						JOptionPane.showMessageDialog(null, "Persona Eliminado");
+						CargarTablaPersonas();
+					}
+					
+					
+
+					
+				}
+				
+				
+				
+				
+			} catch (Exception e2) {
+				JOptionPane.showMessageDialog(null, e2);
+			}
+			
+		} catch (Exception e2) {
+			JOptionPane.showMessageDialog(null, "Seleccione una fila");
+		}
 
 		
 		
@@ -261,26 +330,29 @@ public class GestorVendedores extends JDialog implements ActionListener, MouseLi
 	
 	
 	public void CargarTabla2(Empleado Emp) {
+		Estado = "Empleado";
 		String Columnas[] = {"DNI_Emp", "ID_Emp", "Puesto", "Nombre", "Apellido"};
 		ObjNEmp = new NgcEmpleado();
+		ObjNPer = new NgcPersona();
 		ListaEmp = ObjNEmp.Lista();
+		ObjPer = ObjNPer.BuscarDNI(Emp.getDni_Persona());
 		String Filas[][] = new String[1][5];
 		
 		Filas[0][0] =  String.valueOf(Emp.getDni_Persona());
 		Filas[0][1] = Emp.getID_Emp();
 		Filas[0][2] = String.valueOf(Emp.getPuesto());
-		Filas[0][3] = String.valueOf(Emp.getNombrePersona());
-		Filas[0][4] = String.valueOf(Emp.getApellidosPersona());
+		Filas[0][3] = String.valueOf(ObjPer.getNombrePersona());
+		Filas[0][4] = String.valueOf(ObjPer.getApellidosPersona());
 		
-		DefaultTableModel MiModelo = new DefaultTableModel(Filas, Columnas);
+		MiModelo = new DefaultTableModel(Filas, Columnas);
 		tabla.setModel(MiModelo);
 	}
 	
 	public void CargarTablaPersonas() {
+		Estado = "Persona";
+		lblGestorDeVendedores.setText("Gestor de Personas");
 		
-		
-		
-		String Columnas[] = {"Dni_Persona", "Nombre", "Apellido","Empleado"};
+		String Columnas[] = {"Dni_Persona", "Nombre", "Apellido","Correo","Edad"};
 		ObjNPer = new NgcPersona();
 		ObjNEmp = new NgcEmpleado();
 		objNAdm = new NgcAdmin();
@@ -290,13 +362,17 @@ public class GestorVendedores extends JDialog implements ActionListener, MouseLi
 		int aux = 0;
 		
 		for (int i = 0; i < ListaPer.size(); i++) {
+			
 			int DNI =  ListaPer.get(i).getDni_Persona();
 			
 			if ( (ObjNEmp.BuscarDNI(DNI) == null) &&  (objNAdm.BuscarDNI( DNI) == null )) {
-				Filas[aux][0] =  String.valueOf(ListaPer.get(i).getDni_Persona());
+				Filas[aux][0] = String.valueOf(ListaPer.get(i).getDni_Persona());
 				Filas[aux][1] = String.valueOf(ListaPer.get(i).getNombrePersona());
 				Filas[aux][2] = String.valueOf(ListaPer.get(i).getApellidosPersona());
-				Filas[aux][3] = "Persona";
+				Filas[aux][3] = String.valueOf(ListaPer.get(i).getCorreo());
+				Filas[aux][4] = String.valueOf(ListaPer.get(i).getEdad());
+
+
 				aux++;
 			}
 			
@@ -319,7 +395,9 @@ public class GestorVendedores extends JDialog implements ActionListener, MouseLi
 
 					FrmConvertirEmpleado ce = new FrmConvertirEmpleado(dniPersona);
 					ce.setLocationRelativeTo(getContentPane());
-					ce.setVisible(true);	
+					ce.setVisible(true);
+					
+					CargarTablaPersonas();
 					
 					
 				}else {
@@ -393,4 +471,23 @@ public class GestorVendedores extends JDialog implements ActionListener, MouseLi
 	
 	
 
+	protected void actionPerformedBtnAgregar(ActionEvent e) {
+		
+		FrmCrearNuevaCuenta cnc = new FrmCrearNuevaCuenta();
+		cnc.setLocationRelativeTo(getContentPane());
+		cnc.setVisible(true);
+		
+		
+	}
+	protected void actionPerformedBtnEditar(ActionEvent e) {
+	
+															
+		FrmEditarVendedor ev = new FrmEditarVendedor();
+		ev.setLocationRelativeTo(getContentPane());
+		ev.setVisible(true);
+		
+		CargarTabla();
+		
+	
+	}
 }

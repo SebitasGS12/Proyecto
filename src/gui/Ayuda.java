@@ -109,8 +109,8 @@ public class Ayuda extends JDialog implements ActionListener {
 			
 			Desktop.getDesktop().browse(url.toURI());
 			
-		}catch (IOException | URISyntaxException e1) {
-            e1.getMessage();
+		}catch (IOException | URISyntaxException e2) {
+            e2.getMessage();
         }
 			
 		
